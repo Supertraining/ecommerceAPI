@@ -22,7 +22,8 @@ export default class UsersServices {
                 logger.info(`No existe el usuario ${username}`);
 
                 return false
-            }         
+            }    
+            
             return user;
 
         } catch (error) {

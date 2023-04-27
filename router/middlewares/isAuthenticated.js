@@ -1,3 +1,5 @@
+import { routeLogger } from "../../utils/logger";
+
 export const requireAuthentication = async (req, res, next) => {
 
     try {
