@@ -34,7 +34,7 @@ passport.deserializeUser(async (username, done) => {
 
     } catch (error) {
 
-        logger.eror(error);
+        logger.error(error);
 
     }
 });
