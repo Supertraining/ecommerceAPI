@@ -1,0 +1,21 @@
+paths:
+  /api/carritos/{cartId}/productos:
+    get:
+      summary: Retorna los productos de un carrito con el id especificado.
+      tags:
+        - Carritos
+      parameters:
+        - in: path
+          name: cartId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retorna 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "404": 
+          description: Retorna un valor nulo y un mensaje de error

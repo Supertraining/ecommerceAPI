@@ -1,0 +1,17 @@
+paths:
+  /login:
+    get:
+      summary: Si el usuario existe y su session todavía esta abierta, permite el acceso a la información que deseemos proveerle o a una hipotetica pagina de nuestra elección, en caso contrario retorna un error 404 (Not Found) y solicita al usuario que inicie sesión.
+      tags:
+        - Usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/UserLogin'
+      responses:
+        "201":
+          description: Usuario logueado correctamente.
+        "404":
+          description: Error de logueo.

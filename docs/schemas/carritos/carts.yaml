@@ -1,0 +1,35 @@
+# Carts
+components:
+  schemas:
+    Cart:
+      type: object
+      required:
+       - id
+       - timestamp
+       - productos
+      properties:
+        id:
+          type: String
+          description: Identificador autogenerado de cada Carrito
+        timestamp:
+          type: Date
+          description: Fecha autogenerdada de creación de cada Carrito
+        productos:
+          type: Array
+          description: Contenedor autogenerado de productos de cada Carrito
+      example:
+        id: 1679531656193-90794223
+        timestamp: 2023-04-20T12:53:04.742+00:00
+        productos: [
+          {
+          id: 1679531656193-90794223,
+          timestamp: 2023-04-20T12:53:04.742+00:00,
+          nombre: Coca-Cola,
+          descripcion: bebida a base de cola y cafeína.,
+          codigo: 999,
+          foto: https://firebasestorage.googleapis.com/v0/b/coderhouse-ecommerce-d24ca.appspot.com/o/cocacola.jpg?alt=media&token=06d653cf-5fd3-43fe-bd1b-63352b0f81c6,
+          precio: 400,
+          stock: 10,
+          categoria: 'NoAlcoholica'
+          }
+          ]

@@ -1,0 +1,13 @@
+paths: 
+  /api/carritos:
+    post:
+      summary: Crea y almacena un nuevo carrito autogenerando un identificador único y su fecha de creación.
+      tags:
+        - Carritos
+      responses:
+        "201":
+          description: El carrito fue creado y almacenado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'

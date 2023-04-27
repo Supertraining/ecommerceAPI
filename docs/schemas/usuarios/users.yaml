@@ -1,0 +1,59 @@
+# Users
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        -id
+        -username
+        -password
+        -nombre
+        -direccion
+        -edad
+        -telefono
+        -imagen
+        -cartId
+        -admin
+      properties:
+        id:
+          type: String
+          description: Identificador autogenerado de cada Usuario
+        username:
+          type: String
+          description: direccion de Email de cada Usuario
+        password:
+          type: String
+          description: Contraseña de cada Usuario
+        nombre:
+          type: String
+          description: Nombre de cada Usuario
+        direccion:
+          type: String
+          description: Dirección de cada Usuario
+        edad:
+          type: Number
+          description: Edad de cada Usuario
+        telefono:
+          type: String
+          description: Telefono de cada Usuario
+        imagen:
+          type: String
+          description: Imagen de cada Usuario
+        cartId:
+          type: String
+          description: Identificador autogenerado de cada Carrito
+        admin:
+          type: Boolean 
+          description: Permiso de acceso a nivel administrador de cada usuario
+      example:
+        _id: 6436ef30d8a977652cbeff71
+        username: "mateos@gmail.com"
+        password: "12345"
+        nombre: "Matias"
+        direccion: "calle 333 N°536 Colonia San Francisco"
+        edad: 43
+        telefono: "+541144234444"
+        imagen: "http://localhost:8080/imagen/mateos@gmail.com"
+        cartId: "643ff7ce5ad2c4b2ff642afe"
+        admin: false
+

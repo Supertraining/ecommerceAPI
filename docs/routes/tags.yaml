@@ -1,0 +1,9 @@
+tags:
+  - name: Productos
+    description: Recursos para administrar Productos
+
+  - name: Usuarios
+    description: Recursos para administrar Usuarios
+
+  - name: Carritos
+    description: Recursos para administrar Carritos

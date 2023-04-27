@@ -1,0 +1,18 @@
+paths:
+  /api/carritos/{id}:
+    delete:
+      summary: Elimina el carrito con el id especificado 
+      tags:
+        - Carritos
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retorna un mensaje de confirmación de eliminación del carrito con el id especificado.
+        "404": 
+          description: Retorna un mensaje de error si el carrito con el id especificado no existe
+       

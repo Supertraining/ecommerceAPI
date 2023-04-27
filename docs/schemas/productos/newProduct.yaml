@@ -1,0 +1,43 @@
+# NewProduct
+components:
+  requestBodies:
+    NewProduct:
+      type: object
+      required:
+        - nombre
+        - descripcion
+        - codigo
+        - foto
+        - precio
+        - stock
+        - categoria
+      properties:
+        nombre:
+          type: String
+          description: Nombre de cada Producto
+        descripcion:
+          type: String
+          description: Descripción de cada Producto
+        codigo:
+          type: number
+          description: Código de cada Producto
+        foto:
+          type: String
+          description: Foto de cada Producto
+        precio:
+          type: number
+          description: Precio de cada Producto
+        stock:
+          type: number
+          description: Stock de cada Producto
+        categoria:
+          type: String
+          description: categoría de cada Producto
+      example:
+        nombre: Coca-Cola
+        descripcion: bebida a base de cola y cafeína.
+        codigo: 999
+        foto: https://firebasestorage.googleapis.com/v0/b/coderhouse-ecommerce-d24ca.appspot.com/o/cocacola.jpg?alt=media&token=06d653cf-5fd3-43fe-bd1b-63352b0f81c6
+        precio: 400
+        stock: 10
+        categoria: 'NoAlcoholica'

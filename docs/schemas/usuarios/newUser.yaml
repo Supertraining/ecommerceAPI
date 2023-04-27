@@ -1,0 +1,50 @@
+#NewUser
+components:
+  requestBodies:
+    NewUser:
+      type: object
+      required:
+        -username
+        -password
+        -nombre
+        -direccion
+        -edad
+        -telefono
+        -imagen
+        -cartId
+        -admin
+      properties:
+        username:
+          type: String
+          description: direccion de Email de cada Usuario
+        password:
+          type: String
+          description: Contraseña de cada Usuario
+        nombre:
+          type: String
+          description: Nombre de cada Usuario
+        direccion:
+          type: String
+          description: Dirección de cada Usuario
+        edad:
+          type: Number
+          description: Edad de cada Usuario
+        telefono:
+          type: String
+          description: Telefono de cada Usuario
+        imagen:
+          type: File
+          description: Imagen de cada Usuario
+        admin:
+          type: Boolean 
+          description: Permiso de acceso a nivel administrador de cada usuario
+      example:
+        username: "john@gmail.com"
+        password: "123456"
+        nombre: "John"
+        direccion: "calle 333 N°536 Colonia San Francisco"
+        edad: 43
+        telefono: "+541144234444"
+        imagen: "john.jpg"
+        admin: false
+

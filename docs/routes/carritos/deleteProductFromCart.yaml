@@ -1,0 +1,33 @@
+paths:
+  /api/carritos/{cartId}/productos/{productId}:
+    delete:
+      summary: Elimina un producto seleccionado mediante su id de un carrito especificado mediante su id.
+      tags:
+        - Carritos
+      parameters:
+        - in: path
+          name: cartId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+      responses:
+        "200":
+          description: Retorna el carrito con el id especificado y mostrando que el producto seleccionado ha sido eliminado y un mensaje de confirmación.  
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        "404":
+          description: Retorna un valor nulo y un mensaje de error si el carrito no existe o el producto no existe.
+        

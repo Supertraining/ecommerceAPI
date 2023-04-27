@@ -1,0 +1,21 @@
+paths:
+  /api/productos/categoria/{categoria}:
+    get:
+      summary: Retorna los productos que contengan la categoría especificada
+      tags:
+        - Productos
+      parameters:
+      - name: categoria
+        in: path
+        description: El parámetro de la ruta toma la categoría del producto
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Productos encontrados en la categoría solicitada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "404":
+          description: La categoría solicitada no existe

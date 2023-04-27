@@ -1,0 +1,23 @@
+paths:
+  /api/productos/createProduct:
+    post:
+      summary: Crea y almacena un nuevo producto autogenerando un identificador único y su fecha de creación. (Solo para usuarios administradores)
+      tags:
+        - Productos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/NewProduct'
+      responses:
+        "201":
+          description: El producto fue creado y almacenado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "400": 
+          description: El producto no pudo ser almacenado
+        "401":
+          description: Ruta no autorizada si el usuario no tiene permisos

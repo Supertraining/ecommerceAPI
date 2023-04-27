@@ -1,0 +1,53 @@
+# Products
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - id
+        - timestamp
+        - nombre
+        - descripcion
+        - codigo
+        - foto
+        - precio
+        - stock
+        - categoria
+      properties:
+        id:
+          type: String
+          description: Identificador autogenerado de cada Producto
+        timestamp:
+          type: Date
+          description: Fecha autogenerdada de creación de cada Producto
+        nombre:
+          type: String
+          description: Nombre de cada Producto
+        descripcion:
+          type: String
+          description: Descripción de cada Producto
+        codigo:
+          type: Number
+          description: Código de cada Producto
+        foto:
+          type: String
+          description: Foto de cada Producto
+        precio:
+          type: Number
+          description: Precio de cada Producto
+        stock:
+          type: Number
+          description: Stock de cada Producto
+        categoria:
+          type: String
+          description: categoría de cada Producto
+      example:
+        id: 1679531656193-90794223
+        timestamp: 2023-04-20T12:53:04.742+00:00
+        nombre: Coca-Cola
+        descripcion: bebida a base de cola y cafeína.
+        codigo: 999
+        foto: https://firebasestorage.googleapis.com/v0/b/coderhouse-ecommerce-d24ca.appspot.com/o/cocacola.jpg?alt=media&token=06d653cf-5fd3-43fe-bd1b-63352b0f81c6
+        precio: 400
+        stock: 10
+        categoria: 'NoAlcoholica'
