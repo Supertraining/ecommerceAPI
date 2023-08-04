@@ -54,19 +54,19 @@ export const passportRegister = async (req, res, next) => {
                 },
 
                 async (req, username, password, done) => {
-                  
+
                     const usuario = await userServices
                         .getByUserName(username);
-                   
+
                     const cart = await cartServices
                         .createCart();
 
                     if (usuario) {
-                        
+
                         return done(null, false);
 
                     }
-                    
+
                     let newUser = await userServices
                         .insertUser(
 
@@ -80,7 +80,7 @@ export const passportRegister = async (req, res, next) => {
                             }
 
                         );
-                         
+
                     if (newUser) {
                         adminNewUserNotification(req.body);
                     }
@@ -123,7 +123,7 @@ export const passportLogin = async (req, res, next) => {
                     }
 
                     let auth = await authHash(password, usuario);
-                    
+
                     if (!auth) {
 
                         return done(null, false);
