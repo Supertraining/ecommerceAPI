@@ -1,22 +1,22 @@
 import express from 'express';
 import passport from 'passport';
-import UsersController from '../controllers/users.js';
 import { passportRegister, passportLogin } from './middlewares/passport.js';
 import { routeLogger } from '../utils/logger.js';
 import { savePicturesLocal } from './middlewares/storeUserImage.js';
 import { requireAuthentication } from './middlewares/isAuthenticated.js';
 
+
 const router = express.Router();
 
 export default class UserRouter {
 
-	constructor() {
+	constructor(controller) {
 
-		this.controllers = new UsersController();
+		this.controllers = controller
 
 	}
 
-	start() {
+	getRouter() {
 
 		router.post(
 

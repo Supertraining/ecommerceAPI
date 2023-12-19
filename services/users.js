@@ -1,12 +1,11 @@
-import UsersRepo from "../repo/users.js";
 import logger from "../utils/logger.js";
 import bcrypt from 'bcrypt';
 
 export default class UsersServices {
 
-    constructor() {
+    constructor(repo) {
 
-        this.repo = new UsersRepo();
+        this.repo = repo;
 
     }
 
@@ -104,7 +103,7 @@ export default class UsersServices {
 
             const data = await this.repo
                 .getAllUsers();
-
+                
             if (data.length === 0) {
 
                 logger.info('No hay usuarios registrados');

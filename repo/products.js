@@ -7,7 +7,7 @@ export default class ProductRepo {
 
     constructor() {
 
-        this.dao = DAOFactory.getDao().prodDAO;
+        this.dao = new DAOFactory('product')
 
     }
 

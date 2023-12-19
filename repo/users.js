@@ -5,9 +5,9 @@ import logger from "../utils/logger.js";
 
 export default class UsersRepo {
 
-	constructor() {
+	constructor(dao) {
 
-		this.dao = DAOFactory.getDao().userDAO
+		this.dao = dao
 
 	}
 
@@ -17,7 +17,7 @@ export default class UsersRepo {
 
 			const userDto = await this.dao
 				.getByUserName(username)
-				
+
 			return new UserModel(userDto)
 				.datos();
 
@@ -30,15 +30,15 @@ export default class UsersRepo {
 	}
 
 	async insertUser(data) {
-	
+
 		try {
-				
+
 			let userDto = userDTO(data);
-			
+
 			let newUser = await this.dao
 				.insertUser(userDto);
-			
-			return new UserModel(newUser).datos(); 
+
+			return new UserModel(newUser).datos();
 
 		} catch (err) {
 
@@ -54,7 +54,7 @@ export default class UsersRepo {
 
 			const data = await this.dao
 				.deleteById(id);
-			
+
 			return data;
 
 		} catch (err) {
@@ -71,7 +71,7 @@ export default class UsersRepo {
 
 			const data = await this.dao
 				.getAllUsers();
-			
+
 			return data
 
 		} catch (err) {
@@ -83,17 +83,17 @@ export default class UsersRepo {
 	}
 
 	async getById(id) {
-		
+
 		try {
 
 			const data = await this.dao
 				.getById(id);
-			
-			return new UserModel(data).datos(); 
+
+			return new UserModel(data).datos();
 
 		}
 		catch (err) {
-			
+
 			logger.error(err);
 
 		}
@@ -103,10 +103,10 @@ export default class UsersRepo {
 	async updateUser(id, data) {
 
 		try {
-			
+
 			const newUser = await this.dao
 				.updateUser(id, data);
-			
+
 			return newUser;
 
 		} catch (err) {

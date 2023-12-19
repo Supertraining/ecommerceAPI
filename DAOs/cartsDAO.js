@@ -125,7 +125,7 @@ export default class CartsDAO {
 
 	};
 
-	static async getInstance() {
+	static getInstance() {
 
 		if (!instance) {
 
@@ -137,7 +137,7 @@ export default class CartsDAO {
 
 		logger.info('Se ha utilizado una instancia ya creada de CartsDAO');
 
-		return await instance
+		return instance
 
 	};
 

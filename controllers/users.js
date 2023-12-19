@@ -1,16 +1,12 @@
-import UsersServices from '../services/users.js';
-import ProductServices from '../services/products.js';
 import CartsServices from '../services/carts.js';
 import { adminNewOrderNotification, userOrderNotification } from '../utils/notifications.js';
 import logger, { routeLogger } from '../utils/logger.js';
 
 export default class UsersController {
 
-	constructor() {
+	constructor(service) {
 
-		this.userServices = new UsersServices();
-
-		this.productServices = new ProductServices();
+		this.userServices = service;
 
 		this.cartServices = new CartsServices();
 
@@ -245,7 +241,7 @@ export default class UsersController {
 
 			const users = await this.userServices
 				.getAllUsers();
-
+		
 			res.json(users);
 
 		} catch (error) {

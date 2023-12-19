@@ -89,7 +89,7 @@ export default class ProductsDAO {
 
 	}
 
-	static async getInstance() {
+	static getInstance() {
 
 		if (!instance) {
 
@@ -101,7 +101,7 @@ export default class ProductsDAO {
 
 		logger.info('Se ha utilizado una instancia ya creada de ProductsDAO');
 
-		return await instance;
+		return instance;
 
 	}
 

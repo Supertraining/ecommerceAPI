@@ -3,21 +3,20 @@ import logger from "../utils/logger.js";
 import CartSchema from "../schemas/carts.js";
 import { cartDTO } from "../DTOs/cartDTO.js";
 import CartModel from "../models/cart.js";
-import Productmodel from "../schemas/product.js";
 
 export default class CartsRepo {
     constructor() {
 
-        this.dao = DAOFactory.getDao().cartDAO;
+        this.dao = new DAOFactory('cart')
 
     }
 
     async createCart() {
 
         try {
-          
+
             const cartDto = cartDTO(new CartSchema());
-           
+
             const newCart = await this.dao
                 .createCart(cartDto);
 
@@ -37,7 +36,7 @@ export default class CartsRepo {
 
             const data = await this.dao
                 .addProduct(cartId, productId);
-            
+
             return data;
 
         } catch (err) {
@@ -55,7 +54,7 @@ export default class CartsRepo {
             const data = await this.dao
                 .getAll();
 
-            return data.map(c => new CartModel(c).datos());  ;
+            return data.map(c => new CartModel(c).datos());;
 
         } catch (err) {
 

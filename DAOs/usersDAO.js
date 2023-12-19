@@ -1,4 +1,3 @@
-import * as model from '../schemas/user.js';
 import logger from '../utils/logger.js';
 import userDTO from '../DTOs/userDTO.js';
 
@@ -6,14 +5,17 @@ let instance = null;
 
 export default class UsersDAO {
 
+	constructor(model) {
+		this.model = model
+	}
+
 	async getByUserName(username) {
 
 		try {
 
-			let data = await model
-				.usermodel
+			let data = await this.model
 				.find({ username: username });
-			
+
 			return userDTO(data);
 
 		} catch (err) {
@@ -27,11 +29,10 @@ export default class UsersDAO {
 	async insertUser(data) {
 
 		try {
-			
-			let newUser = await model
-				.usermodel
+
+			let newUser = await this.model
 				.insertMany(data);
-			
+
 			return userDTO(newUser);
 
 		} catch (err) {
@@ -46,8 +47,7 @@ export default class UsersDAO {
 
 		try {
 
-			const data = await model
-				.usermodel
+			const data = await this.model
 				.deleteMany({ _id: id });
 
 			return data;
@@ -64,8 +64,7 @@ export default class UsersDAO {
 
 		try {
 
-			const data = await model
-				.usermodel
+			const data = await this.model
 				.find();
 
 			return data
@@ -82,8 +81,7 @@ export default class UsersDAO {
 
 		try {
 
-			const data = await model
-				.usermodel
+			const data = await this.model
 				.findById(id);
 
 			return userDTO(data);
@@ -99,8 +97,7 @@ export default class UsersDAO {
 
 		try {
 
-			const updateUser = await model
-				.usermodel
+			const updateUser = await this.model
 				.updateMany({ _id: id }, data);
 
 			return updateUser;
@@ -113,12 +110,11 @@ export default class UsersDAO {
 
 	}
 
-	static async getInstance() {
+	static getInstance(model) {
 		try {
-
 			if (!instance) {
 
-				instance = new UsersDAO();
+				instance = new UsersDAO(model);
 
 				logger.info('Se ha creado una instancia de UsersDAO');
 
@@ -126,7 +122,7 @@ export default class UsersDAO {
 
 			logger.info('Se ha utilizado una instancia ya creada de usersDAO');
 
-			return await instance;
+			return instance;
 
 		} catch (error) {
 
