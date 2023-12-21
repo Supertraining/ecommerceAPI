@@ -1,0 +1,15 @@
+paths:
+  /api/users/getAll:
+    get:
+      summary: Retorna todos los usuarios almacenados disponibles
+      tags:
+        - Usuarios
+      responses:
+        "200":
+          description: Todos los usuarios disponibles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
