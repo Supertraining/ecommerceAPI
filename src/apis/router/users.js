@@ -29,8 +29,8 @@ export default class UserRouter {
 			passport.authenticate('register',
 
 				{
-					failureRedirect: '/failregister',
-					successRedirect: '/'
+					failureRedirect: '/api/user/failregister',
+					successRedirect: '/api/user/'
 				}
 
 			)
@@ -78,8 +78,8 @@ export default class UserRouter {
 			passport
 				.authenticate('login',
 					{
-						failureRedirect: '/faillogin',
-						successRedirect: '/inicio'
+						failureRedirect: '/api/user/faillogin',
+						successRedirect: '/api/user/inicio'
 					}
 				)
 
@@ -120,7 +120,7 @@ export default class UserRouter {
 
 			async (req, res) => {
 
-				res.redirect('/inicio');
+				res.redirect('/api/user/inicio');
 
 			}
 

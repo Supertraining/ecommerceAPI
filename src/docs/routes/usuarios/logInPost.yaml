@@ -1,5 +1,5 @@
 paths:
-  /api/users/login:
+  /api/user/login:
     post:
       summary: Compara los datos ingresados con los usuarios existentes. Si el usuario no existe retorna un error 404 (Not Found), en caso contrario loguea al usuario.
       tags:

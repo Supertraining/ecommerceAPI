@@ -1,5 +1,5 @@
 paths:
-  /api/productos/createProduct:
+  /api/product/createProduct:
     post:
       summary: Crea y almacena un nuevo producto autogenerando un identificador único y su fecha de creación. (Solo para usuarios administradores)
       tags:

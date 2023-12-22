@@ -3,7 +3,7 @@ import UsersRepo from '../apis/repo/users.js';
 import UsersServices from '../apis/services/users.js';
 import UsersController from '../apis/controllers/users.js';
 import UserRouter from '../apis/router/users.js';
-import { cartService } from './cart.dependencies.js';
+import { cartService } from './cart.js';
 
 const userDAO = new DAOFactory('user');
 const userRepo = new UsersRepo(userDAO);

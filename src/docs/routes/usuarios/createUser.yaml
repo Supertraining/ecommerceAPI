@@ -1,7 +1,7 @@
 paths:
-  /api/users/register:
+  /api/user/register:
     post:
-      summary: Constata que el usuario que se pretende crear no sea un usuario ya registrado, de ser asi retornara un error, o caso contrario crea, almacena y loguea al nuevo usuario autogenerando un identificador único para el propio usuario y uno para el carrito asociado al mismo y envía un mail al administrador notificando el nuevo registro con los datos del nuevo usuario. 
+      summary: Constata que el usuario que se pretende crear no sea un usuario ya registrado, de ser asi retornara un error, o caso contrario crea, almacena y loguea al nuevo usuario autogenerando un identificador único para el propio usuario y uno para el carrito asociado al mismo y envía un mail al administrador notificando el nuevo registro con los datos del nuevo usuario.
       tags:
         - Usuarios
       requestBody:
@@ -11,17 +11,11 @@ paths:
             schema:
               $ref: '#/components/requestBodies/NewUser'
       responses:
-        "201":
+        '201':
           description: El usuario fue creado, almacenado y logueado correctamente.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        "400":
+        '400':
           description: Solicitud incorrecta.
-          
-                            
-                                  
-                                  
-                           
-                         

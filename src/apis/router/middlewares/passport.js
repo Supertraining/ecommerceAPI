@@ -1,5 +1,5 @@
-import { cartService } from '../../../dependencies/cart.dependencies.js';
-import { userService } from '../../../dependencies/user.dependencies.js';
+import { cartService } from '../../../dependencies/cart.js';
+import { userService } from '../../../dependencies/user.js';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { adminNewUserNotification } from '../../../utils/notifications.js';
@@ -51,20 +51,19 @@ export const passportRegister = async (req, res, next) => {
                 },
 
                 async (req, username, password, done) => {
-             
+
                     const usuario = await userService
                         .getByUserName(username);
-                      
 
-                    const cart = await cartService
-                        .createCart();
-                    
                     if (usuario) {
 
                         return done(null, false);
 
                     }
 
+                    const cart = await cartService
+                        .createCart();
+                    
                     let newUser = await userService
                         .insertUser(
 
@@ -78,7 +77,7 @@ export const passportRegister = async (req, res, next) => {
                             }
 
                         );
-
+                           
                     if (newUser) {
                         adminNewUserNotification(req.body);
                     }

@@ -1,5 +1,5 @@
 paths:
-  /api/users/actualizar/{id}:
+  /api/user/actualizar/{id}:
     put:
       summary: Actualiza el usuario con el id especificado
       tags:

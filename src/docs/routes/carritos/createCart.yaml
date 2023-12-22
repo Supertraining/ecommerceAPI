@@ -1,5 +1,5 @@
 paths: 
-  /api/carritos:
+  /api/cart:
     post:
       summary: Crea y almacena un nuevo carrito autogenerando un identificador único y su fecha de creación.
       tags:

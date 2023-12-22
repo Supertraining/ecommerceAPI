@@ -1,5 +1,5 @@
 paths:
-  /api/carritos/{cartId}/productos/{productId}:
+  /api/cart/{cartId}/productos/{productId}:
     post:
       summary: Agrega un producto seleccionado mediante su id a un carrito especificado mediante su id.
       tags:

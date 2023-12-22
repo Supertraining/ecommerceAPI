@@ -13,7 +13,7 @@ const options = {
             version: '1.0.0',
         },
     },
-    apis: [path.join(process.cwd(),'/docs/**/*.yaml')],
+    apis: [path.join(process.cwd(),'src/docs/**/*.yaml')],
 }
 
 const swaggerSpec = swaggerJsdoc(options);

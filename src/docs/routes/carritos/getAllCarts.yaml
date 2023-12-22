@@ -1,5 +1,5 @@
 paths:
-  /api/carritos:
+  /api/cart/:
     get:
       summary: Retorna todos los carritos almacenados disponibles
       tags:

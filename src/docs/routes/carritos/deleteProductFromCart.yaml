@@ -1,5 +1,5 @@
 paths:
-  /api/carritos/{cartId}/productos/{productId}:
+  /api/cart/{cartId}/productos/{productId}:
     delete:
       summary: Elimina un producto seleccionado mediante su id de un carrito especificado mediante su id.
       tags:

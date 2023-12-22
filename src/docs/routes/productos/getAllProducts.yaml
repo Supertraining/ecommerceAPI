@@ -1,5 +1,5 @@
 paths:
-  /api/productos:
+  /api/product:
     get:
       summary: Retorna todos los productos almacenados disponibles
       tags:

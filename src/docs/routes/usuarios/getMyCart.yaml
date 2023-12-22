@@ -1,5 +1,5 @@
 paths:
-  /api/users/miCarrito:
+  /api/user/miCarrito:
     get:
       summary: Retorna el carrito de compras del usuario logueado. (loggeado requerido)
       tags:

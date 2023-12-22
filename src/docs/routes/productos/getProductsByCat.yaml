@@ -1,5 +1,5 @@
 paths:
-  /api/productos/categoria/{categoria}:
+  /api/product/categoria/{categoria}:
     get:
       summary: Retorna los productos que contengan la categoría especificada
       tags:

@@ -29,7 +29,7 @@ export default class UsersDAO {
 	async insertUser(data) {
 
 		try {
-
+			
 			let newUser = await this.model
 				.insertMany(data);
 

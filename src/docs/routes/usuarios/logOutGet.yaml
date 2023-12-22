@@ -1,5 +1,5 @@
 paths:
-  /api/users/logout:
+  /api/user/logout:
     get:
       summary: Cierre de sesión
       tags:

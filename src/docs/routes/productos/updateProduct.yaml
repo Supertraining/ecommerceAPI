@@ -1,15 +1,15 @@
 paths:
-  /api/productos/{id}:
+  /api/product/{id}:
     put:
       summary: Actualiza el producto con el id especificado. (Solo para usuarios administradores)
       tags:
         - Productos
       parameters:
-      - name: id
-        in: path
-        description: El parámetro de la ruta toma el id del producto
-        required: true
-        type: string
+        - name: id
+          in: path
+          description: El parámetro de la ruta toma el id del producto
+          required: true
+          type: string
       requestBody:
         required: true
         content:
@@ -17,14 +17,13 @@ paths:
             schema:
               $ref: '#/components/schemas/Product'
       responses:
-        "204":
+        '204':
           description: El producto actualizado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-        "404":
+        '404':
           description: El producto con el id especificado no existe o la información provista es idéntica a la ya existente
-        "401":
+        '401':
           description: Ruta no autorizada si el usuario no tiene permisos
-       

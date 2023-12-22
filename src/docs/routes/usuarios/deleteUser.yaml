@@ -1,5 +1,5 @@
 paths:
-  /api/users/eliminar/{id}:
+  /api/user/eliminar/{id}:
     delete:
       summary: Elimina el usuario con el id proporcionado
       tags:

@@ -1,5 +1,5 @@
 paths:
-  /api/users/user/{id}:
+  /api/user/user/{id}:
     get:
       summary: Retorna el usuario con el id especificado
       tags:

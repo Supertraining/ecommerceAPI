@@ -1,5 +1,5 @@
 paths:
-  /api/users/getAll:
+  /api/user/getAll:
     get:
       summary: Retorna todos los usuarios almacenados disponibles
       tags:

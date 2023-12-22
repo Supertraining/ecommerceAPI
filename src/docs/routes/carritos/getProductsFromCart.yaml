@@ -1,5 +1,5 @@
 paths:
-  /api/carritos/{cartId}/productos:
+  /api/cart/{cartId}/productos:
     get:
       summary: Retorna los productos de un carrito con el id especificado.
       tags:

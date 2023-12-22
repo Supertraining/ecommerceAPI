@@ -1,5 +1,5 @@
 paths:
-  /api/productos/{id}:
+  /api/product/{id}:
     delete:
       summary: Elimina el producto con el id proporcionado. (Solo para usuarios administradores)
       tags:
