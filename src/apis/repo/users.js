@@ -1,7 +1,5 @@
-import DAOFactory from "../DAOs/DAOFactory.js";
 import userDTO from "../DTOs/userDTO.js";
 import UserModel from "../../models/user.js";
-import logger from "../../utils/logger.js";
 
 export default class UsersRepo {
 
@@ -18,12 +16,14 @@ export default class UsersRepo {
 			const userDto = await this.dao
 				.getByUserName(username)
 
-			return new UserModel(userDto)
-				.datos();
+			return userDto === null
+				? userDto
+				: new UserModel(userDto)
+					.datos();
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw error
 
 		}
 
@@ -40,9 +40,9 @@ export default class UsersRepo {
 
 			return new UserModel(newUser).datos();
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw (error)
 
 		}
 
@@ -57,9 +57,9 @@ export default class UsersRepo {
 
 			return data;
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw (error)
 
 		}
 
@@ -74,9 +74,9 @@ export default class UsersRepo {
 
 			return data
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw (error)
 
 		}
 
@@ -92,9 +92,9 @@ export default class UsersRepo {
 			return new UserModel(data).datos();
 
 		}
-		catch (err) {
+		catch (error) {
 
-			logger.error(err);
+			throw (error)
 
 		}
 
@@ -109,9 +109,9 @@ export default class UsersRepo {
 
 			return newUser;
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw (error)
 
 		}
 

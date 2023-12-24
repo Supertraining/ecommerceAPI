@@ -30,7 +30,7 @@ export default class UserRouter {
 
 				{
 					failureRedirect: '/api/user/failregister',
-					successRedirect: '/api/user/'
+					successRedirect: '/api/user/inicio'
 				}
 
 			)
@@ -94,7 +94,7 @@ export default class UserRouter {
 
 		);
 
-		router.get(
+		router.post(
 
 			'/inicio',
 
@@ -114,17 +114,6 @@ export default class UserRouter {
 
 		);
 	
-		router.get(
-
-			'/',
-
-			async (req, res) => {
-
-				res.redirect('/api/user/inicio');
-
-			}
-
-		);
 
 		router.get(
 

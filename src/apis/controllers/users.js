@@ -1,4 +1,4 @@
-import { adminNewOrderNotification, userOrderNotification } from '../../utils/notifications.js';
+import { adminNewOrderNotification, userOrderNotification } from '../../utils/notificationsUtils.js';
 import logger, { routeLogger } from '../../utils/logger.js';
 
 export default class UsersController {
@@ -12,18 +12,18 @@ export default class UsersController {
 	}
 
 
-	getByUserName = async (req, res) => {
+	getByUserName = async (req, res, next) => {
 
 		try {
 
 			const usuario = await this.userServices
 				.getByUserName(req.user?.username);
 
-			res.json({ message: `Usuario ${usuario.username} logueado` })
+			res.json({ message: `Usuario ${usuario.username} logueado` });
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error);
 
 		}
 
@@ -32,35 +32,35 @@ export default class UsersController {
 	getUserImage = async (req, res, next) => {
 
 		try {
-	
-			!req.user?.username 
-			
-			? res.status(404).json({ message: 'Por favor inicie sesión' })
 
-			: await res.json(
+			!req.user?.username
 
-				{
-					imagen: `../public/images/${req.user.username}.jpg`
-				}
+				? res.status(404).json({ message: 'Por favor inicie sesión' })
 
-			);
+				: await res.json(
+
+					{
+						imagen: `../public/images/${req.user.username}.jpg`
+					}
+
+				);
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	};
 
-	getMyCart = async (req, res) => {
+	getMyCart = async (req, res, next) => {
 
 		try {
 
 			const userName = await req.user?.username;
 
 			if (!userName) {
-				res.status(404).json({message : 'Por favor inicie sesión'});
+				res.status(404).json({ message: 'Por favor inicie sesión' });
 			}
 
 			const carrito = await this.cartServices
@@ -79,19 +79,19 @@ export default class UsersController {
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	}
 
-	newOrderNotification = async (req, res) => {
-		
+	newOrderNotification = async (req, res, next) => {
+
 		try {
-			
+
 			const user = await this.userServices
 				.getByUserName(req.user.username);
-			
+
 			const carrito = await this.cartServices
 				.getCartById(user.cartId);
 
@@ -107,9 +107,9 @@ export default class UsersController {
 
 			products
 				.forEach(product => {
-					generateOrder[product.nombre]
-						? generateOrder[product.nombre]++
-						: generateOrder[product.nombre] = 1;
+					generateOrder[ product.nombre ]
+						? generateOrder[ product.nombre ]++
+						: generateOrder[ product.nombre ] = 1;
 				});
 
 			const newOrder = JSON.stringify(generateOrder);
@@ -121,7 +121,7 @@ export default class UsersController {
 			newOrder
 				? compra = true
 				: compra = false;
-				
+
 			userOrderNotification(user.telefono)
 
 			res.json(
@@ -136,25 +136,25 @@ export default class UsersController {
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	}
 
-	failRegister = async (req, res) => {
+	failRegister = async (req, res, next) => {
 		try {
 
 			res.status(404).json({ message: 'Error de registro' });
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 	}
 
-	logout = async (req, res) => {
+	logout = async (req, res, next) => {
 
 		try {
 
@@ -180,13 +180,13 @@ export default class UsersController {
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	}
 
-	failLogin = async (req, res) => {
+	failLogin = async (req, res, next) => {
 
 		try {
 
@@ -194,13 +194,13 @@ export default class UsersController {
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	}
 
-	failInsertUser = async (req, res) => {
+	failInsertUser = async (req, res, next) => {
 
 		try {
 
@@ -208,86 +208,75 @@ export default class UsersController {
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 	}
 
-	deleteById = async (req, res) => {
+	deleteById = async (req, res, next) => {
 
 		try {
 
 			const deletedUser = await this.userServices
 				.deleteById(req.params.id);
 
-			deletedUser.data
-
-				? res.status(200).json(deletedUser)
-
-				: res.status(404).json(deletedUser);
+			res.json(deletedUser)
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	}
 
-	getAllUsers = async (req, res) => {
+	getAllUsers = async (req, res, next) => {
 
 		try {
 
 			const users = await this.userServices
 				.getAllUsers();
-		
-			res.json(users);
+			users.length === 0
+				? res.json(data).send('No hay usuarios registrados')
+				: res.json(users);
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	}
 
-	getById = async (req, res) => {
+	getById = async (req, res, next) => {
 
 		try {
 
 			const user = await this.userServices
 				.getById(req.params.id);
 
-			user.data
-
-				? res.status(200).json(user)
-
-				: res.status(404).json(user);
-
+			res.status(200).json(user)
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);;
+			next(error);
 
 		}
 
 	}
 
-	updateUser = async (req, res) => {
+	updateUser = async (req, res, next) => {
 
 		try {
 
 			const updatedUser = await this.userServices
 				.updateUser(req.params.id, req.body);
-			updatedUser.data
 
-				? res.json(updatedUser)
-
-				: res.status(404).json(updatedUser.message);
+			res.json(updatedUser);
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 

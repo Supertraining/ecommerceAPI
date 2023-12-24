@@ -1,6 +1,7 @@
+
 class UserDTO {
     constructor({ username, password, nombre, direccion, edad, telefono, imagen, cartId, admin }) {
-       
+
         this.username = username
         this.password = password
         this.nombre = nombre
@@ -14,12 +15,17 @@ class UserDTO {
 }
 
 export default function userDTO(user) {
+    try {
 
-    if (Array.isArray(user)) {
-    
-        
-        return new UserDTO(user[0]) 
-        
-    }   
-    return new UserDTO(user)
+        if (Array.isArray(user)) {
+
+
+            return new UserDTO(user)
+
+        }
+        return new UserDTO(user)
+    } catch (error) {
+        throw error
+    }
+
 }

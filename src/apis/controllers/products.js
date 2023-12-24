@@ -8,7 +8,7 @@ export default class ProductsControllers {
 
 	};
 
-	save = async (req, res) => {
+	save = async (req, res, next) => {
 
 		try {
 
@@ -26,13 +26,13 @@ export default class ProductsControllers {
 
 		} catch (error) {
 
-			routeLogger(req, error);
+			next(error)
 
 		}
 
 	};
 
-	updateProduct = async (req, res) => {
+	updateProduct = async (req, res, next) => {
 
 		try {
 
@@ -44,13 +44,13 @@ export default class ProductsControllers {
 
 		} catch (error) {
 
-			routeLogger(req, error);
+			next(error)
 
 		}
 
 	};
 
-	getAll = async (req, res) => {
+	getAll = async (req, res, next) => {
 
 		try {
 
@@ -75,13 +75,13 @@ export default class ProductsControllers {
 
 		} catch (error) {
 
-			routeLogger(req, error);
+			next(error)
 
 		}
 
 	};
 
-	getProductsByCategory = async (req, res) => {
+	getProductsByCategory = async (req, res, next) => {
 
 		try {
 
@@ -97,13 +97,13 @@ export default class ProductsControllers {
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	}
 
-	deleteById = async (req, res) => {
+	deleteById = async (req, res, next) => {
 
 		try {
 
@@ -115,7 +115,7 @@ export default class ProductsControllers {
 
 		} catch (error) {
 
-			routeLogger(req, error);
+			next(error)
 
 		}
 

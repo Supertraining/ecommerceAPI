@@ -1,5 +1,6 @@
-import logger from '../../utils/logger.js';
 import userDTO from '../DTOs/userDTO.js';
+import createError from '../../utils/createErrorUtils.js';
+import logger from '../../utils/logger.js';
 
 let instance = null;
 
@@ -13,15 +14,16 @@ export default class UsersDAO {
 
 		try {
 
-			let data = await this.model
-				.find({ username: username });
+			let user = await this.model
+				.findOne({ username: username });
 
-			return userDTO(data);
+			return user === null
+				? user
+				: userDTO(user)
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
-
+			throw error
 		}
 
 	}
@@ -29,15 +31,15 @@ export default class UsersDAO {
 	async insertUser(data) {
 
 		try {
-			
+
 			let newUser = await this.model
 				.insertMany(data);
 
-			return userDTO(newUser);
+			return userDTO(newUser[ 0 ]);
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw (error)
 
 		}
 
@@ -47,14 +49,25 @@ export default class UsersDAO {
 
 		try {
 
-			const data = await this.model
+			const user = await this.model
 				.deleteMany({ _id: id });
 
-			return data;
+			if (user.deletedCount === 0) {
 
-		} catch (err) {
+				let error = createError(404, `Usuario con el Id: ${id} no encontrado`);
+				throw error
 
-			logger.error(err);
+			}
+
+			return user;
+
+		} catch (error) {
+
+			if (error.kind === 'ObjectId') {
+				let error = createError(400, 'Id incorrecta')
+				throw error
+			}
+			throw (error)
 
 		}
 
@@ -69,9 +82,9 @@ export default class UsersDAO {
 
 			return data
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw (error)
 
 		}
 
@@ -81,14 +94,25 @@ export default class UsersDAO {
 
 		try {
 
-			const data = await this.model
+			const user = await this.model
 				.findById(id);
 
-			return userDTO(data);
+			if (!user) {
 
-		} catch (err) {
+				let error = createError(404, `Usuario con el Id: ${id} no encontrado`);
+				throw error
 
-			logger.error(err);
+			}
+
+			return userDTO(user);
+
+		} catch (error) {
+
+			if (error.kind === 'ObjectId') {
+				let error = createError(400, 'Id incorrecta')
+				throw error
+			}
+			throw (error)
 
 		}
 	}
@@ -97,14 +121,34 @@ export default class UsersDAO {
 
 		try {
 
-			const updateUser = await this.model
+			const updatedUser = await this.model
 				.updateMany({ _id: id }, data);
 
-			return updateUser;
+			if (updatedUser.matchedCount === 0) {
 
-		} catch (err) {
+				let error = createError(404, `Usuario con el Id: ${id} no encontrado`);
 
-			logger.error(err);
+				throw error
+
+			}
+			if (updatedUser.modifiedCount === 0 && updatedUser.matchedCount === 1) {
+
+				let error = createError(400, `Usuario con el Id: ${id} no ha sido modificado`);
+
+				throw error
+
+			}
+
+
+			return updatedUser;
+
+		} catch (error) {
+
+			if (error.kind === 'ObjectId') {
+				let error = createError(400, 'Id incorrecta')
+				throw error
+			}
+			throw (error)
 
 		}
 
@@ -112,21 +156,22 @@ export default class UsersDAO {
 
 	static getInstance(model) {
 		try {
+
 			if (!instance) {
 
 				instance = new UsersDAO(model);
 
 				logger.info('Se ha creado una instancia de UsersDAO');
 
+			} else {
+				logger.info('Se ha utilizado una instancia ya creada de usersDAO');
 			}
-
-			logger.info('Se ha utilizado una instancia ya creada de usersDAO');
 
 			return instance;
 
 		} catch (error) {
 
-			logger.error(error);
+			throw (error)
 
 		}
 

@@ -1,5 +1,5 @@
 import logger from "../../utils/logger.js";
-
+import createError from '../../utils/createErrorUtils.js'
 export default class CartsServices {
 
     constructor(repo, productService) {
@@ -14,12 +14,12 @@ export default class CartsServices {
 
             const newCart = await this.repo
                 .createCart();
-            
+
             return newCart;
 
-        } catch (err) {
+        } catch (error) {
 
-            logger.error(err);
+            throw error
 
         }
 
@@ -29,58 +29,23 @@ export default class CartsServices {
 
         try {
 
-            const cart = await this.repo.getCartById(cartId);
+            const product = await this.productService.getById(productId);
 
-            if (!cart) {
+            const productAdded = await this.repo
+                .addProduct(cartId, product);
 
-                logger.info(`El Carrito con el Id: ${cartId}, no existe`);
+            if (productAdded) {
 
-                return {
-                    data: null,
-                    message: `El Carrito con el Id: ${cartId}, no existe`
-                };
+                const cartWithProduct = await this.repo
+                    .getCartById(cartId);
 
-            }
-
-            const product = await  this.productService.getById(productId);
-
-            if (!product) {
-
-                logger.info(`El producto con el Id: ${productId},  no existe`);
-
-                return {
-                    data: null,
-                    message: `El producto con el Id ${productId}, no existe`
-                }
+                return cartWithProduct
             }
 
 
-            const data = await this.repo
-                .addProduct(cartId, productId);
+        } catch (error) {
 
-            if (!data) {
-
-                logger.info(`El producto ${productId} no se ha podido añadir al carrito ${cartId}`);
-
-                return {
-                    data: null,
-                    message: `El producto ${productId} no ha podido ser añadido al carrito ${cartId}`
-                }
-            }
-
-            const updatedCart = await this.repo
-                .getCartById(cartId);
-
-            logger.info(`El producto ${productId} se ha añadido correctamente al carrito ${cartId}`);
-
-            return {
-                data: updatedCart,
-                message: `El producto ${productId} se ha añadido correctamente al carrito ${cartId}`
-            }
-
-        } catch (err) {
-
-            logger.error(err);
+            throw error
 
         }
 
@@ -90,26 +55,14 @@ export default class CartsServices {
 
         try {
 
-            const data = await this.repo
+            const carts = await this.repo
                 .getAll();
 
-            if (data.length > 0) {
+            return carts;
 
-                return data;
+        } catch (error) {
 
-            } else {
-
-                return {
-                    data: data,
-                    message: 'No hay carritos'
-
-                }
-
-            }
-
-        } catch (err) {
-
-            logger.error(err);
+            throw error
 
         }
 
@@ -119,29 +72,36 @@ export default class CartsServices {
 
         try {
 
-            const data = await this.repo
+            const cart = await this.repo
                 .getCartById(id);
 
-            if (!data) {
+            return cart;
 
-                return {
+        } catch (error) {
 
-                    data: null,
-                    message: `El carrito con el Id: ${id}, no existe`
-
-                }
-
-            }
-
-            return data;
-
-        } catch (err) {
-
-            logger.error(err);
+            throw error
 
         }
 
     }
+
+    getCartProducts = async (id) => {
+
+		try {
+
+			const cart = await this.repo
+				.getCartById(id);
+
+			return cart.productos
+
+		} catch (error) {
+
+			throw(error)
+
+		}
+
+	};
+
 
     async deleteCartById(id) {
 
@@ -150,24 +110,11 @@ export default class CartsServices {
             const data = await this.repo
                 .deleteCartById(id);
 
-            if (data.deletedCount === 0) {
+            data
 
-                return {
+        } catch (error) {
 
-                    data: null,
-                    message: `El carrito con el Id ${id}, no existe`
-
-                }
-
-            }
-
-            return {
-                message: `El carrito con el Id ${id}, ha sido eliminado`,
-            }
-
-        } catch (err) {
-
-            logger.error(err);
+            throw error
 
         }
 
@@ -178,32 +125,19 @@ export default class CartsServices {
         try {
 
             const cart = await this.repo.getCartById(cartId);
+            
+            const isProductInCart = await cart.productos.some(p => p._id === productId);
+         
+            if (!isProductInCart) {
 
-            if (!cart) {
-
-                logger.info(`El Carrito con el Id: ${cartId}, no existe`);
-
-                return {
-                    cart: null,
-                    message: `El Carrito con el Id: ${cartId}, no existe`
-                };
-
+                let error = createError(404, `El producto con el Id: ${productId},  no fue encontrado en el carrito con el id: ${cartId}`);
+                throw error;
             }
 
-            const product = await cart.productos.some(p => p._id.toString() === productId);
-
-            if (!product) {
-
-                logger.info(`El producto con el Id: ${productId},  no existe`);
-
-                return {
-                    product: null,
-                    message: `El producto con el Id ${productId}, no existe`
-                }
-            }
+            const product = await this.productService.getById(productId);
 
             const data = await this.repo
-                .deleteCartProductById(cartId, productId);
+                .deleteCartProductById(cartId, product);
 
             if (!data) {
 
@@ -216,14 +150,11 @@ export default class CartsServices {
             const updatedCart = await this.repo
                 .getCartById(cartId);
 
-            return {
-                data: updatedCart,
-                message: `El producto ${productId} se ha eliminado correctamente del carrito ${cartId}`
-            }
+            return updatedCart
 
-        } catch (err) {
+        } catch (error) {
 
-            logger.error(err);
+            throw error
 
         }
 

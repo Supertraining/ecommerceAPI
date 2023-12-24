@@ -23,7 +23,7 @@ export default class ProductRepo {
 
         } catch (error) {
 
-            logger.error(error);
+           throw(error)
 
         }
 
@@ -40,7 +40,7 @@ export default class ProductRepo {
 
         } catch (error) {
 
-            logger.error(error);
+           throw(error)
 
         }
 
@@ -57,7 +57,7 @@ export default class ProductRepo {
 
         } catch (error) {
 
-            logger.error(error);
+           throw(error)
 
         }
 
@@ -74,7 +74,7 @@ export default class ProductRepo {
 
         } catch (error) {
 
-            logger.error(error);
+           throw(error)
 
         }
 
@@ -91,7 +91,7 @@ export default class ProductRepo {
 
         } catch (error) {
 
-            logger.error(error);
+           throw(error)
 
         }
 

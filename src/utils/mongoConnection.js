@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import logger from './logger.js'
 
-export const connect = async (url) => {
+export const connect = (url) => {
 
     try {
 
-        await mongoose.connect(`${url}`,
+        mongoose.connect(`${url}`,
             {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,

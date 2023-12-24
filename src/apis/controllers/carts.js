@@ -8,7 +8,7 @@ export default class CartsController {
 
 	}
 
-	createCart = async (req, res) => {
+	createCart = async (req, res, next) => {
 
 		try {
 
@@ -19,92 +19,89 @@ export default class CartsController {
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error.name);
+			next(error)
 
 		}
 
 	};
 
-	addProduct = async (req, res) => {
+	addProduct = async (req, res, next) => {
 
 		try {
 
-			const data = await this.cartServices
-				.addProduct(req.params.idCarrito, req.params.idProducto);
-			data.data
+			const productId = req.params.idProducto
 
-				? res.status(200).json(data)
-				: res.status(404).json(data);
+			const cartId = req.params.idCarrito
+
+			const cartWithProduct = await this.cartServices
+				.addProduct(cartId, productId );
+			
+				res.json(cartWithProduct).send()
+		
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	};
 
-	getAll = async (req, res) => {
+	getAll = async (req, res, next) => {
 
 		try {
 
-			let data = await this.cartServices
+			let carts = await this.cartServices
 				.getAll();
 
-			res.json(data);
+			carts.length === 0
+			? res.json(carts).send('No hay carritos creados')
+			: res.json(carts)
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	}
 
-	getCartById = async (req, res) => {
+	getCartById = async (req, res, next) => {
 
 		try {
 
-			let data = await this.cartServices
+			let cart = await this.cartServices
 				.getCartById(req.params.id);
 
-			data
-
-				? res.status(200).json(data)
-
-				: res.status(404).json(data);
-
+				res.json(cart)
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	}
 
-	getCartProducts = async (req, res) => {
+	getCartProducts = async (req, res, next) => {
 
 		try {
 
-			const data = await this.cartServices
-				.getCartById(req.params.id);
+			const cartProducts = await this.cartServices
+				.getCartProducts(req.params.id);
 
-			data.data
-				
-				? res.status(200).json(data.productos)
-
-				: res.status(404).json(data);
+			res.json(cartProducts)
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	};
 
-	deleteCartById = async (req, res) => {
+	deleteCartById = async (req, res, next) => {
+		
 		try {
 
 			const data = await this.cartServices
@@ -114,27 +111,27 @@ export default class CartsController {
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 
 	};
 
-	deleteCartProductById = async (req, res) => {
+	deleteCartProductById = async (req, res, next) => {
 
 		try {
 
-			const data = await this.cartServices
-				.deleteCartProductById(req.params.idCarrito, req.params.id_prod);
+			const cartId = req.params.idCarrito;
+			const productId = req.params.id_prod
 
-			data.data
-				? res.status(200).json(data)
+			const updatedCart = await this.cartServices
+				.deleteCartProductById(cartId, productId);
 
-				: res.status(404).json(data);
+			res.json(updatedCart).send(`El producto ${productId} se ha eliminado correctamente del carrito ${cartId}`)
 
 		} catch (error) {
 
-			routeLogger(req, 'error', error);
+			next(error)
 
 		}
 

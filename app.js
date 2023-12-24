@@ -2,14 +2,15 @@ import express, { json, urlencoded } from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import fileUpload from 'express-fileupload';
-import { routeLogger } from './src/utils/logger.js';
 import * as config from './src/config/config.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './src/config/swaggerSpecs.js';
 import router from './src/dependencies/index.js'
 import cors from 'cors'
 import helmet from 'helmet';
-import {rateLimit} from 'express-rate-limit';
+import { rateLimit } from 'express-rate-limit';
+import nonExistentRoute from './src/apis/router/middlewares/routeValidation.js'
+import errorHandler from './src/apis/router/middlewares/errorHandler.js';
 
 const app = express();
 
@@ -36,15 +37,14 @@ app.use(passport.session());
 app.use('/public/images/', express.static('./public/images'));
 app.use('/public/icons', express.static('./public/icons'));
 app.use('/public/js', express.static('./public/js'));
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/', router)
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.all('/*', (req, res) => {
-	const { url, method } = req
-	routeLogger(req, 'warn')
-	res.send(`La ruta ${method} ${url} no esta implementada`)
-})
+app.use(nonExistentRoute)
+
+app.use(errorHandler)
+
 
 export default app
 

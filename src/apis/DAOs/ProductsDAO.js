@@ -1,3 +1,4 @@
+import createError from '../../utils/createErrorUtils.js';
 import logger from '../../utils/logger.js';
 
 let instance = null;
@@ -17,9 +18,9 @@ export default class ProductsDAO {
 
 			return product;
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw (error)
 
 		}
 
@@ -32,11 +33,20 @@ export default class ProductsDAO {
 			const product = await this.model
 				.findById(id);
 
+			if (!product) {
+				let error = createError(404, `Producto con el id: ${id} no encontrado`);
+				throw error;
+			}
+
 			return product;
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			if (error.kind === 'ObjectId') {
+				let error = createError(400, 'Id incorrecta')
+				throw error
+			}
+			throw (error)
 
 		}
 
@@ -51,9 +61,9 @@ export default class ProductsDAO {
 
 			return data;
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw (error)
 
 		}
 
@@ -68,9 +78,9 @@ export default class ProductsDAO {
 
 			return products;
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw (error)
 		}
 	}
 
@@ -83,9 +93,9 @@ export default class ProductsDAO {
 
 			return data;
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw (error)
 
 		}
 
@@ -99,9 +109,11 @@ export default class ProductsDAO {
 
 			logger.info('Se ha creado una instancia de ProductsDAO');
 
+		} else {
+			logger.info('Se ha utilizado una instancia ya creada de ProductsDAO');
 		}
 
-		logger.info('Se ha utilizado una instancia ya creada de ProductsDAO');
+
 
 		return instance;
 

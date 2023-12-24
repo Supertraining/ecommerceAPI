@@ -20,7 +20,7 @@ export default class ProductServices {
 
         } catch (error) {
 
-            logger.error(error);
+            throw(error)
 
         }
 
@@ -33,22 +33,11 @@ export default class ProductServices {
             const product = await this.repo
                 .getById(id);
 
-            if (!product) {
-
-                return {
-                    message: `El producto con el Id: ${id} no encontrado`,
-                    data: product
-                };
-
-            }
-
-            return {
-                data: product
-            } 
+            return product
 
         } catch (error) {
 
-            logger.error(error);
+            throw(error)
 
         }
 
@@ -70,7 +59,7 @@ export default class ProductServices {
 
 		} catch (error) {
 
-			logger.error(error);
+			throw(error)
 
 		}
 
@@ -113,7 +102,7 @@ export default class ProductServices {
 
         } catch (error) {
 
-            logger.error(error);
+            throw(error)
 
         }
 
@@ -142,7 +131,7 @@ export default class ProductServices {
 
         } catch (error) {
 
-            logger.error(error);
+            throw(error)
 
         }
 
@@ -177,7 +166,7 @@ export default class ProductServices {
 
         } catch (error) {
 
-            logger.error(error);
+            throw(error)
 
         }
 

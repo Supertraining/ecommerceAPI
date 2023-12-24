@@ -21,26 +21,26 @@ export default class CartsRepo {
 
             return new CartModel(newCart).datos();
 
-        } catch (err) {
+        } catch (error) {
 
-            logger.error(err);
+           throw(error)
 
         }
 
     }
 
-    async addProduct(cartId, productId) {
+    async addProduct(cartId, product) {
 
         try {
 
-            const data = await this.dao
-                .addProduct(cartId, productId);
+            const productAdded = await this.dao
+                .addProduct(cartId, product);
 
-            return data;
+            return productAdded;
 
-        } catch (err) {
+        } catch (error) {
 
-            logger.error(err);
+           throw(error)
 
         }
 
@@ -55,9 +55,9 @@ export default class CartsRepo {
 
             return data.map(c => new CartModel(c).datos());;
 
-        } catch (err) {
+        } catch (error) {
 
-            logger.error(err);
+           throw(error)
 
         }
 
@@ -67,14 +67,14 @@ export default class CartsRepo {
 
         try {
 
-            const data = await this.dao
+            const cart = await this.dao
                 .getCartById(id);
 
-            return new CartModel(data).datos();
+            return new CartModel(cart).datos();
 
-        } catch (err) {
+        } catch (error) {
 
-            logger.error(err);
+            throw error;
 
         }
 
@@ -84,14 +84,14 @@ export default class CartsRepo {
 
         try {
 
-            const data = await this.dao
+            const cart = await this.dao
                 .deleteCartById(id);
 
-            return data;
+            return cart;
 
-        } catch (err) {
+        } catch (error) {
 
-            logger.error(err);
+           throw(error)
 
         }
 
@@ -102,13 +102,13 @@ export default class CartsRepo {
         try {
 
             const data = await this.dao
-                .deleteCartProductById(cartId, productId);
+                .deleteCartProductById(cartId, product);
 
             return data;
 
-        } catch (err) {
+        } catch (error) {
 
-            logger.error(err);
+           throw(error)
 
         }
 

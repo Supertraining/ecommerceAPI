@@ -1,4 +1,5 @@
 import winston, { format } from 'winston';
+import chalk from 'chalk';
 
 const { combine, prettyPrint, timestamp, errors } = winston.format;
 
@@ -22,8 +23,8 @@ const logger = winston.createLogger(
 		format: combine(errors({ stack: true }), timestamp(), prettyPrint()),
 		transports: [
 			new winston.transports.Console({ level: 'info', format: filterOnly('info') }),
-			new winston.transports.File({ level: 'warn', format: filterOnly('warn'), filename: './log/warn.log' }),
-			new winston.transports.File({ level: 'error', format: filterOnly('error'), filename: './log/error.log', }),
+			new winston.transports.File({ level: 'warn', format: filterOnly('warn'), filename: './src/log/warn.log' }),
+			new winston.transports.File({ level: 'error', format: filterOnly('error'), filename: './src/log/error.log', }),
 		],
 
 	}
@@ -47,6 +48,34 @@ export const routeLogger = async (req, lvl, error) => {
 			logger.error(`Ha ocurrido un error en la ruta ${req.method} ${req.url}, ${error}`);
 
 		}
+
+	} catch (error) {
+
+		logger.error(error);
+
+	}
+	
+};
+export const handleLog = async (err, additionalInfo) => {
+
+	try {
+
+		if (!additionalInfo) {
+			logger.error(err.stack);
+			return;
+		}
+
+		const errorMessage = `Error occurred: ${err.message}\nAdditional Info:\n
+		Route: ${additionalInfo.route} 
+		Method: ${additionalInfo.method}
+		IP: ${additionalInfo.ip}
+		User_agent: ${additionalInfo.user_agent}
+		user: ${additionalInfo.user?.username}
+		Stack Trace: ${err.stack}\n\n`;
+
+		logger.error(errorMessage)
+
+		console.error(chalk.red.bold('Error occurred, check error.log file for more details'));
 
 	} catch (error) {
 

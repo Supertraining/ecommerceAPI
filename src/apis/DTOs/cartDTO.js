@@ -12,13 +12,20 @@ class CartDTO {
 
 export function cartDTO(cart) {
 
-    if (!cart.timestamp) {
+    try {
+        if (!cart.timestamp) {
 
-        return new CartDTO(cart._id, Date.now(), []);
+            return new CartDTO(cart._id, Date.now(), []);
+
+        }
+
+        return new CartDTO(cart._id, cart.timestamp, cart.productos);
+
+    } catch (error) {
+
+        throw error;
 
     }
-
-    return new CartDTO(cart._id, cart.timestamp, cart.productos);
 
 }
 

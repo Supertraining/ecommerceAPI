@@ -1,3 +1,4 @@
+import createError from '../../utils/createErrorUtils.js';
 import logger from '../../utils/logger.js';
 
 let instance = null;
@@ -16,22 +17,19 @@ export default class CartsDAO {
 
 			return newCart
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw error;
 
 		}
 
 	}
 
-	async addProduct(cartId, productId) {
+	async addProduct(cartId, product) {
 
 		try {
 
-			const product = await this.productModel
-				.findById(productId);
-
-			const data = await this.cartModel.updateOne(
+			const productAdded = await this.cartModel.updateOne(
 
 				{ _id: cartId },
 
@@ -43,11 +41,15 @@ export default class CartsDAO {
 				}
 			);
 
-			return data
+			return productAdded
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			if (error.kind === 'ObjectId') {
+				let error = createError(400, 'Id incorrecta')
+				throw error
+			}
+			throw (error)
 
 		}
 
@@ -62,9 +64,9 @@ export default class CartsDAO {
 
 			return data;
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			throw error;
 
 		};
 
@@ -74,14 +76,23 @@ export default class CartsDAO {
 
 		try {
 
-			const data = await this.cartModel
+			const cart = await this.cartModel
 				.findById(id);
 
-			return data;
+			if (!cart) {
+				let error = createError(404, `Carrito con el ${id} no encontrado`);
+				throw error;
+			}
 
-		} catch (err) {
+			return cart;
 
-			logger.error(err);
+		} catch (error) {
+
+			if (error.kind === 'ObjectId') {
+				let error = createError(400, 'Id incorrecta')
+				throw error
+			}
+			throw (error)
 
 		}
 
@@ -91,25 +102,33 @@ export default class CartsDAO {
 
 		try {
 
-			const data = await this.cartModel
+			const cart = await this.cartModel
 				.deleteOne({ _id: id });
 
-			return data
+			if (cart.deletedCount === 0) {
 
-		} catch (err) {
+				let error = createError(404, `EL carrito con el Id: ${id} no encontrado`);
+				throw error
 
-			logger.error(err);
+			}
+
+			return cart
+
+		} catch (error) {
+
+			if (error.kind === 'ObjectId') {
+				let error = createError(400, 'Id incorrecta')
+				throw error
+			}
+			throw (error)
 
 		};
 
 	};
 
-	async deleteCartProductById(cartId, productId) {
+	async deleteCartProductById(cartId, product) {
 
 		try {
-
-			const product = await this.productModel
-				.findById(productId);
 
 			const data = await this.cartModel.updateOne({ _id: cartId }, {
 				$pull: {
@@ -119,9 +138,13 @@ export default class CartsDAO {
 
 			return data
 
-		} catch (err) {
+		} catch (error) {
 
-			logger.error(err);
+			if (error.kind === 'ObjectId') {
+				let error = createError(400, 'Id incorrecta')
+				throw error
+			}
+			throw (error)
 
 		};
 
@@ -135,9 +158,9 @@ export default class CartsDAO {
 
 			logger.info('Se ha creado una instancia de CartsDAO');
 
-		};
-
-		logger.info('Se ha utilizado una instancia ya creada de CartsDAO');
+		} else {
+			logger.info('Se ha utilizado una instancia ya creada de CartsDAO');
+		}
 
 		return instance
 
