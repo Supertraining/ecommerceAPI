@@ -1,8 +1,8 @@
-import DAOFactory from '../apis/DAOs/DAOFactory.js';
-import UsersRepo from '../apis/repo/users.js';
-import UsersServices from '../apis/services/users.js';
-import UsersController from '../apis/controllers/users.js';
-import UserRouter from '../apis/router/users.js';
+import DAOFactory from '../DAOs/DAOFactory.js';
+import UsersRepo from '../repo/users.js';
+import UsersServices from '../services/users.js';
+import UsersController from '../controllers/users.js';
+import UserRouter from '../router/users.js';
 import { cartService } from './cart.js';
 
 const userDAO = new DAOFactory('user');

@@ -1,7 +1,7 @@
-import logger, { handleLog } from "../../../utils/logger.js";
+import logger, { handleLog } from "../../utils/logger.js";
 const errorHandler = (err, req, res, next) => {
   try {
-    console.log('ENTRO AL ERROR HANDLER')
+  
     const errorStatus = err.status || 500;
     const errorMessage = !err.status ? 'Internal server Error' : err.message;
 

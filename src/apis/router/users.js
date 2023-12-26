@@ -1,9 +1,9 @@
 import express from 'express';
 import passport from 'passport';
-import { passportRegister, passportLogin } from './middlewares/passport.js';
+import { passportRegister, passportLogin } from '../middlewares/passport.js';
 import { routeLogger } from '../../utils/logger.js';
-import { savePicturesLocal } from './middlewares/storeUserImage.js';
-import { requireAuthentication } from './middlewares/isAuthenticated.js';
+import { savePicturesLocal } from '../middlewares/storeUserImage.js';
+import { requireAuthentication } from '../middlewares/isAuthenticated.js';
 
 
 const router = express.Router();
@@ -85,16 +85,13 @@ export default class UserRouter {
 
 		);
 
+		router.get('/faillogin', (req, res) => {
+
+				res.status(404).send('Error en el login')
+
+		});
+
 		router.get(
-
-			'/faillogin',
-
-			this.controllers
-				.failLogin
-
-		);
-
-		router.post(
 
 			'/inicio',
 

@@ -1,5 +1,3 @@
-import { routeLogger } from '../../utils/logger.js';
-
 export default class CartsController {
 
 	constructor(service) {

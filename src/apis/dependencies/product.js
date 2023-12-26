@@ -1,8 +1,8 @@
-import DAOFactory from "../apis/DAOs/DAOFactory.js";
-import ProductsControllers from "../apis/controllers/products.js";
-import ProductRepo from "../apis/repo/products.js";
-import ProductsRouter from "../apis/router/products.js";
-import ProductServices from "../apis/services/products.js";
+import DAOFactory from "../DAOs/DAOFactory.js";
+import ProductsControllers from "../controllers/products.js";
+import ProductRepo from "../repo/products.js";
+import ProductsRouter from "../router/products.js";
+import ProductServices from "../services/products.js";
 
 
 

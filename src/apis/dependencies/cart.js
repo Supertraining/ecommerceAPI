@@ -1,9 +1,9 @@
-import DAOFactory from "../apis/DAOs/DAOFactory.js";
-import CartsController from "../apis/controllers/carts.js";
+import DAOFactory from "../DAOs/DAOFactory.js";
+import CartsController from "../controllers/carts.js";
 import { productService } from "./product.js";
-import CartsRepo from "../apis/repo/carts.js";
-import CartsRouter from "../apis/router/carts.js";
-import CartsServices from "../apis/services/carts.js";
+import CartsRepo from "../repo/carts.js";
+import CartsRouter from "../router/carts.js";
+import CartsServices from "../services/carts.js";
 
 
 const cartDAO = new DAOFactory('cart');

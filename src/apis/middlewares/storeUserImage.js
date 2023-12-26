@@ -1,4 +1,4 @@
-import { routeLogger } from '../../../utils/logger.js';
+import { routeLogger } from '../../utils/logger.js';
 
 export const savePicturesLocal = async (req, res, next) => {
 
@@ -11,6 +11,7 @@ export const savePicturesLocal = async (req, res, next) => {
     } catch (error) {
 
         routeLogger(req, 'error', error);
+        next(error);
 
     }
 

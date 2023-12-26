@@ -50,10 +50,10 @@ export default class ProductRepo {
 
         try {
 
-            const data = await this.dao
+            const updatedProduct = await this.dao
                 .updateProduct(id, update);
 
-            return data;
+            return updatedProduct;
 
         } catch (error) {
 

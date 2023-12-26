@@ -2,15 +2,15 @@ import express, { json, urlencoded } from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import fileUpload from 'express-fileupload';
-import * as config from './src/config/config.js';
+import * as config from './config/config.js';
 import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './src/config/swaggerSpecs.js';
-import router from './src/dependencies/index.js'
+import swaggerSpec from './config/swaggerSpecs.js';
+import router from './apis/dependencies/index.js'
 import cors from 'cors'
 import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
-import nonExistentRoute from './src/apis/router/middlewares/routeValidation.js'
-import errorHandler from './src/apis/router/middlewares/errorHandler.js';
+import nonExistentRoute from './apis/middlewares/routeValidation.js'
+import errorHandler from './apis/middlewares/errorHandler.js';
 
 const app = express();
 
@@ -20,7 +20,6 @@ const limiter = rateLimit({
 	standardHeaders: 'draft-7', 
 	legacyHeaders: false,
 })
-
 app.use(cors())
 app.use(limiter)
 app.use(helmet())

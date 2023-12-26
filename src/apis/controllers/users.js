@@ -1,5 +1,5 @@
 import { adminNewOrderNotification, userOrderNotification } from '../../utils/notificationsUtils.js';
-import logger, { routeLogger } from '../../utils/logger.js';
+import logger from '../../utils/logger.js';
 
 export default class UsersController {
 
@@ -186,19 +186,6 @@ export default class UsersController {
 
 	}
 
-	failLogin = async (req, res, next) => {
-
-		try {
-
-			res.status(404).json({ message: 'Error en el login' });
-
-		} catch (error) {
-
-			next(error)
-
-		}
-
-	}
 
 	failInsertUser = async (req, res, next) => {
 

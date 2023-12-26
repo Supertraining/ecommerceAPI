@@ -56,13 +56,32 @@ export default class ProductsDAO {
 
 		try {
 
-			const data = await this.model
+			const updatedProduct = await this.model
 				.updateOne({ _id: id }, { $set: update });
 
-			return data;
+			if (updatedUser.matchedCount === 0) {
+
+				let error = createError(404, `El producto con el Id: ${id} no encontrado`);
+
+				throw error
+
+			}
+			if (updatedUser.modifiedCount === 0 && updatedUser.matchedCount === 1) {
+
+				let error = createError(400, `El producto con el Id: ${id} no ha sido modificado`);
+
+				throw error
+
+			}
+
+			return updatedProduct;
 
 		} catch (error) {
 
+			if (error.kind === 'ObjectId') {
+				let error = createError(400, 'Id incorrecta')
+				throw error
+			}
 			throw (error)
 
 		}
@@ -88,13 +107,24 @@ export default class ProductsDAO {
 
 		try {
 
-			const data = await this.model
+			const productDeleted = await this.model
 				.deleteOne({ _id: id });
 
-			return data;
+			if (productDeleted.deletedCount === 0) {
+		
+				let error = createError(404, `Producto con el Id: ${id} no encontrado`);
+				throw error
+
+			}
+
+			return productDeleted;
 
 		} catch (error) {
 
+			if (error.kind === 'ObjectId') {
+				let error = createError(400, 'Id incorrecta')
+				throw error
+			}
 			throw (error)
 
 		}
@@ -112,8 +142,6 @@ export default class ProductsDAO {
 		} else {
 			logger.info('Se ha utilizado una instancia ya creada de ProductsDAO');
 		}
-
-
 
 		return instance;
 

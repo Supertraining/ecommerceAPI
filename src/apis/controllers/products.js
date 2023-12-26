@@ -1,5 +1,3 @@
-import { routeLogger } from '../../utils/logger.js';
-
 export default class ProductsControllers {
 
 	constructor(service) {
@@ -36,11 +34,10 @@ export default class ProductsControllers {
 
 		try {
 
-			const data = await this.services
+			const updatedProduct = await this.services
 				.updateProduct(req.params.id, req.body);
-			data.data
-				? res.status(200).json(data)
-				: res.status(404).json(data.message)
+
+			res.json(updatedProduct)
 
 		} catch (error) {
 
@@ -54,24 +51,26 @@ export default class ProductsControllers {
 
 		try {
 
-			let data = null;
+			const allProducts = await this.services
+				.getAll()
+			res.json(allProducts)
 
-			if (!req.params.id) {
-				data = await this.services
-					.getAll()
-				res.json(data)
+		} catch (error) {
 
-			} else {
-				data = await this.services
-					.getById(req.params.id);
+			next(error)
 
-				data
-					? res.json(data)
-					: res.status(404).json(data)
-			}
+		}
 
+	};
 
+	getById = async (req, res, next) => {
 
+		try {
+
+			const product = await this.services
+				.getById(req.params.id);
+
+			res.json(product)
 
 		} catch (error) {
 
@@ -84,12 +83,6 @@ export default class ProductsControllers {
 	getProductsByCategory = async (req, res, next) => {
 
 		try {
-
-			if (!req.params.categoria) {
-
-				res.status(404).json({ message: 'Categoria no encontrada' })
-
-			}
 
 			const productsByCategory = await this.services.getProductsByCategory(req.params.categoria)
 
@@ -107,11 +100,12 @@ export default class ProductsControllers {
 
 		try {
 
-			const data = await this.services
-				.deleteById(req.params.id);
-			data.data
-				? res.status(204).json(data)
-				: res.status(404).json(data)
+			const productId = req.params.id
+
+			const productDeleted = await this.services
+				.deleteById(productId);
+			
+			res.status(204).send(`Product with id: ${productId} succesfully deleted`)
 
 		} catch (error) {
 

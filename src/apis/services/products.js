@@ -1,5 +1,6 @@
 import ProductsRepo from '../repo/products.js';
 import logger from '../../utils/logger.js';
+import createError from '../../utils/createErrorUtils.js';
 
 export default class ProductServices {
 
@@ -20,7 +21,7 @@ export default class ProductServices {
 
         } catch (error) {
 
-            throw(error)
+            throw (error)
 
         }
 
@@ -37,7 +38,7 @@ export default class ProductServices {
 
         } catch (error) {
 
-            throw(error)
+            throw (error)
 
         }
 
@@ -45,64 +46,47 @@ export default class ProductServices {
 
     async getProductsByCategory(category) {
 
-		try {
+        try {
 
-			const data = await this.repo
-				.getAll()
-	
-			const productsByCategory = data
-				.filter(product => product.categoria === category)
-		
-			
+            const data = await this.repo
+                .getAll()
+
+            const categoryExists = data.some(e => e.categoria === category)
+            if (!categoryExists) {
+                let error = createError(404, 'Categoría no existente');
+                throw error;
+            }
+            const productsByCategory = data
+                .filter(product => product.categoria === category)
+            console.log(productsByCategory)
+
             return productsByCategory
-			
 
-		} catch (error) {
+        } catch (error) {
 
-			throw(error)
+            throw (error)
 
-		}
+        }
 
     }
-    
+
     async updateProduct(id, update) {
 
         try {
 
-            const data = await this.repo
+            const isProductUpdated = await this.repo
                 .updateProduct(id, update);
 
-            if (data.matchedCount === 0) {
+            if (isProductUpdated) {
+                const updatedProduct = await this.repo
+                    .getById(id);
 
-                logger.info(`El producto con el Id: ${id} no encontrado`);
-
-                return {
-                    data: null,
-                    message: `El producto con el Id: ${id} no encontrado`,
-                };
-
+                return updatedProduct
             }
-
-            if (data.modifiedCount === 0) {
-
-                return {
-                    data: null,
-                    message: `El producto no ha sido actualizado, la información provista es igual a la que el producto ya posee`,
-                };
-
-            }
-
-            const updatedProduct = await this.repo
-                .getById(id);
-           
-            return {
-                message: 'producto actualizado con exito',
-                data: updatedProduct
-            };
 
         } catch (error) {
 
-            throw(error)
+            throw (error)
 
         }
 
@@ -131,7 +115,7 @@ export default class ProductServices {
 
         } catch (error) {
 
-            throw(error)
+            throw (error)
 
         }
 
@@ -141,32 +125,14 @@ export default class ProductServices {
 
         try {
 
-            const data = await this.repo
+            const productDeleted = await this.repo
                 .deleteById(id);
 
-            if (data.deletedCount === 0) {
-
-                logger.info(`El producto con el Id: ${id} no existe`);
-
-                return {
-                    message: `El producto con el Id: ${id} no existe`,
-                    data: null
-                }
-            }
-
-            const deletedProduct = await this.repo
-                .getById(id);
-
-            logger.info('producto eliminado con exito');
-
-            return {
-                message: `producto ${id} eliminado con exito`,
-                deletedProduct: deletedProduct
-            };
+                return productDeleted
 
         } catch (error) {
 
-            throw(error)
+            throw (error)
 
         }
 

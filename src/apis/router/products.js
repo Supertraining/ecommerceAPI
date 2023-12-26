@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { isAdmin } from './middlewares/isAdmin.js';
+import { isAdmin } from '../middlewares/isAdmin.js';
 
 const router = Router();
 
@@ -15,7 +15,15 @@ export default class ProductsRouter {
 
         router.get(
 
-            '/:id?',
+            '/:id',
+
+            this.controllers
+                .getById
+
+        );
+        router.get(
+
+            '/',
 
             this.controllers
                 .getAll
@@ -24,7 +32,7 @@ export default class ProductsRouter {
 
         router.get(
 
-			'/categoria/:categoria?',
+			'/categoria/:categoria',
 
 			this.controllers
 				.getProductsByCategory

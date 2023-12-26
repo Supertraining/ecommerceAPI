@@ -1,10 +1,10 @@
-import { cartService } from '../../../dependencies/cart.js';
-import { userService } from '../../../dependencies/user.js';
+import { cartService } from '../dependencies/cart.js';
+import { userService } from '../dependencies/user.js';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import { adminNewUserNotification } from '../../../utils/notificationsUtils.js';
-import logger, { routeLogger } from '../../../utils/logger.js';
-import { authenticateUser } from '../../../utils/passwordUtils.js';
+import { adminNewUserNotification } from '../../utils/notificationsUtils.js';
+import logger, { routeLogger } from '../../utils/logger.js';
+import { authenticateUser } from '../../utils/passwordUtils.js';
 
 passport.serializeUser(async (user, done) => {
 
