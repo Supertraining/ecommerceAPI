@@ -1,6 +1,8 @@
 paths:
   /api/cart/{cartId}:
     get:
+      security:
+        - bearerAuth: []  
       summary: Retorna un carrito con el id especificado.
       tags:
         - Carritos
@@ -19,3 +21,5 @@ paths:
                 $ref: '#/components/schemas/Cart'
         "404": 
           description: Retorna un valor nulo y un mensaje de error
+        '401':
+          description: Unauthorized   

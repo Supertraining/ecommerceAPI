@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
-import logger from './logger.js';
+import logger from '../log/logger.js';
 
-export const authenticateUser = async (password, usuario) => {
+export const authenticatePassword = async (password, user) => {
 
     try {
 
-        const auth = bcrypt.compare(password, usuario.password);
+        const auth = bcrypt.compare(password, user.password);
 
         return auth;
 

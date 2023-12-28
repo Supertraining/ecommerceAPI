@@ -1,6 +1,8 @@
 paths:
   /api/cart/{cartId}/productos/{productId}:
     delete:
+      security:
+        - bearerAuth: [] 
       summary: Elimina un producto seleccionado mediante su id de un carrito especificado mediante su id.
       tags:
         - Carritos
@@ -30,4 +32,5 @@ paths:
                 $ref: '#/components/schemas/Cart'
         "404":
           description: Retorna un valor nulo y un mensaje de error si el carrito no existe o el producto no existe.
-        
+        '401':
+          description: Unauthorized 

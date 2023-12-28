@@ -12,7 +12,7 @@ components:
         -telefono
         -imagen
         -cartId
-        -admin
+        -role
       properties:
         username:
           type: String
@@ -35,9 +35,9 @@ components:
         imagen:
           type: File
           description: Imagen de cada Usuario
-        admin:
-          type: Boolean 
-          description: Permiso de acceso a nivel administrador de cada usuario
+        role:
+          type: String 
+          description: Permiso de acceso al rol de cada usuario
       example:
         username: "john@gmail.com"
         password: "123456"
@@ -46,5 +46,5 @@ components:
         edad: 43
         telefono: "+541144234444"
         imagen: "john.jpg"
-        admin: false
+        role: "admin"
 

@@ -1,5 +1,3 @@
-import ProductsRepo from '../repo/products.js';
-import logger from '../../utils/logger.js';
 import createError from '../../utils/createErrorUtils.js';
 
 export default class ProductServices {
@@ -17,7 +15,7 @@ export default class ProductServices {
             const product = await this.repo
                 .save(obj);
 
-            return product
+            return product;
 
         } catch (error) {
 
@@ -34,7 +32,7 @@ export default class ProductServices {
             const product = await this.repo
                 .getById(id);
 
-            return product
+            return product;
 
         } catch (error) {
 
@@ -57,10 +55,9 @@ export default class ProductServices {
                 throw error;
             }
             const productsByCategory = data
-                .filter(product => product.categoria === category)
-            console.log(productsByCategory)
+                .filter(product => product.categoria === category);
 
-            return productsByCategory
+            return productsByCategory;
 
         } catch (error) {
 
@@ -81,7 +78,7 @@ export default class ProductServices {
                 const updatedProduct = await this.repo
                     .getById(id);
 
-                return updatedProduct
+                return updatedProduct;
             }
 
         } catch (error) {
@@ -99,19 +96,8 @@ export default class ProductServices {
             const products = await this.repo
                 .getAll();
 
-            if (products.length === 0) {
+            return products;
 
-                logger.info('No hay productos registrados');
-
-                return {
-                    message: 'No hay productos registrados',
-                    data: products
-                };
-            }
-
-            return {
-                data: products
-            };
 
         } catch (error) {
 
@@ -128,7 +114,7 @@ export default class ProductServices {
             const productDeleted = await this.repo
                 .deleteById(id);
 
-                return productDeleted
+            return productDeleted;
 
         } catch (error) {
 

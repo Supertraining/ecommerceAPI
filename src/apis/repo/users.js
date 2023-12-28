@@ -1,5 +1,4 @@
 import userDTO from "../DTOs/userDTO.js";
-import UserModel from "../../models/user.js";
 
 export default class UsersRepo {
 
@@ -9,6 +8,24 @@ export default class UsersRepo {
 
 	}
 
+	async registerUser(data) {
+
+		try {
+
+			let newUser = await this.dao
+				.registerUser(data);
+
+			return newUser;
+
+		} catch (error) {
+
+			throw (error)
+
+		}
+
+	}
+
+
 	async getByUserName(username) {
 
 		try {
@@ -16,33 +33,11 @@ export default class UsersRepo {
 			const userDto = await this.dao
 				.getByUserName(username)
 
-			return userDto === null
-				? userDto
-				: new UserModel(userDto)
-					.datos();
+			return userDto
 
 		} catch (error) {
 
 			throw error
-
-		}
-
-	}
-
-	async insertUser(data) {
-
-		try {
-
-			let userDto = userDTO(data);
-
-			let newUser = await this.dao
-				.insertUser(userDto);
-
-			return new UserModel(newUser).datos();
-
-		} catch (error) {
-
-			throw (error)
 
 		}
 
@@ -86,10 +81,10 @@ export default class UsersRepo {
 
 		try {
 
-			const data = await this.dao
+			const user = await this.dao
 				.getById(id);
 
-			return new UserModel(data).datos();
+			return user
 
 		}
 		catch (error) {

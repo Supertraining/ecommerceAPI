@@ -53,7 +53,9 @@ export default class ProductsControllers {
 
 			const allProducts = await this.services
 				.getAll()
-			res.json(allProducts)
+			allProducts.length === 0
+				? res.status(204).json(allProducts)
+				: res.json(allProducts)
 
 		} catch (error) {
 
@@ -104,7 +106,7 @@ export default class ProductsControllers {
 
 			const productDeleted = await this.services
 				.deleteById(productId);
-			
+
 			res.status(204).send(`Product with id: ${productId} succesfully deleted`)
 
 		} catch (error) {

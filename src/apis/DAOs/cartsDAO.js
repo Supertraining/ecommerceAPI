@@ -1,5 +1,5 @@
 import createError from '../../utils/createErrorUtils.js';
-import logger from '../../utils/logger.js';
+import logger from '../../log/logger.js';
 
 let instance = null;
 

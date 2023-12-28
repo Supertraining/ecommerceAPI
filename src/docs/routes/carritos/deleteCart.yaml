@@ -1,7 +1,9 @@
 paths:
   /api/cart/{id}:
     delete:
-      summary: Elimina el carrito con el id especificado 
+      security:
+        - bearerAuth: []
+      summary: Elimina el carrito con el id especificado
       tags:
         - Carritos
       parameters:
@@ -11,8 +13,11 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Retorna un mensaje de confirmación de eliminación del carrito con el id especificado.
-        "404": 
+        '404':
           description: Retorna un mensaje de error si el carrito con el id especificado no existe
-       
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden  

@@ -1,15 +1,20 @@
 paths:
   /api/user/miCarrito:
     get:
+      security:
+        - bearerAuth: []
       summary: Retorna el carrito de compras del usuario logueado. (loggeado requerido)
       tags:
         - Usuarios
       responses:
-        "200":
+        '200':
           description: Carrito de compras encontrado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cart'
-        "404":
-          description: Carrito no encontrado, por favor inicie sesión. 
+        '404':
+          description: Carrito no encontrado, por favor inicie sesión.
+        "401":
+          description: Unauthorized
+        

@@ -19,6 +19,8 @@ export const sessionConfig = {
     saveUninitialized: false,
 };
 
+export const JWTsecret = process.env.SECRET;
+
 export const nodeEnv = process.env.NODE_ENV;
 export const mongoURL = process.env.MONGO_URL;
 export const mongoLocalURL = process.env.MONGO_LOCAL_URL;

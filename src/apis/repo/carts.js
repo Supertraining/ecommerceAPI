@@ -1,7 +1,5 @@
-import logger from "../../utils/logger.js";
-import CartSchema from "../../schemas/carts.js";
+import CartSchema from "../../db/schemas/carts.js";
 import { cartDTO } from "../DTOs/cartDTO.js";
-import CartModel from "../../models/cart.js";
 
 export default class CartsRepo {
     constructor(dao) {
@@ -15,15 +13,15 @@ export default class CartsRepo {
         try {
 
             const cartDto = cartDTO(new CartSchema());
-         
+
             const newCart = await this.dao
                 .createCart(cartDto);
 
-            return new CartModel(newCart).datos();
+            return newCart;
 
         } catch (error) {
 
-           throw(error)
+            throw (error)
 
         }
 
@@ -40,7 +38,7 @@ export default class CartsRepo {
 
         } catch (error) {
 
-           throw(error)
+            throw (error)
 
         }
 
@@ -50,14 +48,14 @@ export default class CartsRepo {
 
         try {
 
-            const data = await this.dao
+            const carts = await this.dao
                 .getAll();
 
-            return data.map(c => new CartModel(c).datos());;
+            return carts;
 
         } catch (error) {
 
-           throw(error)
+            throw (error)
 
         }
 
@@ -70,7 +68,7 @@ export default class CartsRepo {
             const cart = await this.dao
                 .getCartById(id);
 
-            return new CartModel(cart).datos();
+            return cart;
 
         } catch (error) {
 
@@ -91,7 +89,7 @@ export default class CartsRepo {
 
         } catch (error) {
 
-           throw(error)
+            throw (error)
 
         }
 
@@ -108,7 +106,7 @@ export default class CartsRepo {
 
         } catch (error) {
 
-           throw(error)
+            throw (error)
 
         }
 

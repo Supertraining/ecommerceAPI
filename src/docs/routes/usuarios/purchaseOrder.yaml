@@ -1,15 +1,20 @@
 paths:
   /api/user/miCarrito:
     post:
+      security:
+        - bearerAuth: []
       summary: Genera una orden de compras con los productos que se encuentran dentro del carrito del usuario logueado. Envía la orden al correo electrónico del administrador y un sms al usuario confirmando que su pedido ha sido recibido.
       tags:
         - Usuarios
       responses:
-        "200":
+        '200':
           description: Carrito de compras encontrado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cart'
-        "404":
-          description: El carrito de compras esta vacío. 
+        '404':
+          description: El carrito de compras esta vacío.
+        "401":
+          description: Unauthorized
+       

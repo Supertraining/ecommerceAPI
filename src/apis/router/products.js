@@ -1,5 +1,7 @@
 import { Router } from 'express';
-import { isAdmin } from '../middlewares/isAdmin.js';
+import { isAuthenticated } from '../middlewares/authValidation.js';
+import { authorize } from '../middlewares/roleValidation.js';
+
 
 const router = Router();
 
@@ -13,64 +15,21 @@ export default class ProductsRouter {
 
     getRouter() {
 
-        router.get(
+        router.get('/:id', this.controllers.getById);
 
-            '/:id',
+        router.get('/', this.controllers.getAll);
 
-            this.controllers
-                .getById
+        router.get('/categoria/:categoria', this.controllers.getProductsByCategory);
 
-        );
-        router.get(
+        router.use(isAuthenticated)
+        router.use(authorize('admin'))
 
-            '/',
+        router.post('/createProduct', this.controllers.save);
 
-            this.controllers
-                .getAll
+        router.put('/:id', this.controllers.updateProduct);
 
-        );
+        router.delete('/:id', this.controllers.deleteById);
 
-        router.get(
-
-			'/categoria/:categoria',
-
-			this.controllers
-				.getProductsByCategory
-
-		);
-        
-        router.post(
-
-            '/createProduct',
-
-            isAdmin,
-
-            this.controllers
-                .save
-
-        );
-
-        router.put(
-
-            '/:id',
-
-            isAdmin,
-
-            this.controllers
-                .updateProduct
-
-        );
-
-        router.delete(
-
-            '/:id',
-
-            isAdmin,
-
-            this.controllers
-                .deleteById
-
-        );
 
         return router;
 

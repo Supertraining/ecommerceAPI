@@ -1,6 +1,6 @@
 import userDTO from '../DTOs/userDTO.js';
 import createError from '../../utils/createErrorUtils.js';
-import logger from '../../utils/logger.js';
+import logger from '../../log/logger.js';
 
 let instance = null;
 
@@ -9,26 +9,7 @@ export default class UsersDAO {
 	constructor(model) {
 		this.model = model
 	}
-
-	async getByUserName(username) {
-
-		try {
-
-			let user = await this.model
-				.findOne({ username: username });
-
-			return user === null
-				? user
-				: userDTO(user)
-
-		} catch (error) {
-
-			throw error
-		}
-
-	}
-
-	async insertUser(data) {
+	async registerUser(data) {
 
 		try {
 
@@ -41,6 +22,26 @@ export default class UsersDAO {
 
 			throw (error)
 
+		}
+
+	}
+
+	async getByUserName(username) {
+
+		try {
+
+			let user = await this.model
+				.findOne({ username: username });
+
+			if (!user) {
+				let error = createError(404, 'User not found');
+				throw error;
+			}
+			return userDTO(user)
+
+		} catch (error) {
+
+			throw error
 		}
 
 	}

@@ -19,3 +19,4 @@ paths:
                 $ref: '#/components/schemas/Product'
         "404":
           description: La categoría solicitada no existe
+        

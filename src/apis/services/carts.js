@@ -1,4 +1,3 @@
-import logger from "../../utils/logger.js";
 import createError from '../../utils/createErrorUtils.js'
 export default class CartsServices {
 

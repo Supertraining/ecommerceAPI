@@ -1,5 +1,5 @@
 import { adminNewOrderNotification, userOrderNotification } from '../../utils/notificationsUtils.js';
-import logger from '../../utils/logger.js';
+import logger from '../../log/logger.js';
 
 export default class UsersController {
 
@@ -11,6 +11,35 @@ export default class UsersController {
 
 	}
 
+	registerUser = async (req, res, next) => {
+		try {
+
+			const user = await this.userServices.registerUser(req.body);
+
+			res.status(201).send(`User ${user.username} created successfully`)
+
+		} catch (error) {
+
+			next(error)
+
+		}
+	}
+
+	login = async (req, res, next) => {
+		try {
+
+			const { username, password } = req.body;
+
+			const loggedUser = await this.userServices.login(username, password);
+
+			res.send(loggedUser);
+
+		} catch (error) {
+
+			next(error)
+
+		}
+	}
 
 	getByUserName = async (req, res, next) => {
 
@@ -142,17 +171,6 @@ export default class UsersController {
 
 	}
 
-	failRegister = async (req, res, next) => {
-		try {
-
-			res.status(404).json({ message: 'Error de registro' });
-
-		} catch (error) {
-
-			next(error)
-
-		}
-	}
 
 	logout = async (req, res, next) => {
 
@@ -186,19 +204,6 @@ export default class UsersController {
 
 	}
 
-
-	failInsertUser = async (req, res, next) => {
-
-		try {
-
-			res.status(400).json({ message: 'Error en el registro de usuario' });
-
-		} catch (error) {
-
-			next(error)
-
-		}
-	}
 
 	deleteById = async (req, res, next) => {
 

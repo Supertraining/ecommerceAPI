@@ -1,6 +1,4 @@
 import { productoDTO } from "../DTOs/productDTO.js";
-import ProductModel from "../../models/product.js";
-import logger from "../../utils/logger.js";
 
 export default class ProductRepo {
 
@@ -19,7 +17,7 @@ export default class ProductRepo {
             const productDto = await this.dao
                 .save(productDb);
             
-            return productDto.map((p) => new ProductModel(p).datos());
+            return productDto;
 
         } catch (error) {
 
@@ -36,7 +34,7 @@ export default class ProductRepo {
             const productDto = await this.dao
                 .getById(id);
                 
-            return new ProductModel(productDto).datos();
+            return productDto;
 
         } catch (error) {
 
@@ -70,7 +68,7 @@ export default class ProductRepo {
             const products = await this
                 .dao.getAll();
 
-            return products.map((p) => new ProductModel(p).datos());
+            return products
 
         } catch (error) {
 

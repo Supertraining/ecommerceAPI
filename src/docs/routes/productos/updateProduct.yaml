@@ -1,6 +1,8 @@
 paths:
   /api/product/{id}:
     put:
+      security:
+        - bearerAuth: []
       summary: Actualiza el producto con el id especificado. (Solo para usuarios administradores)
       tags:
         - Productos
@@ -26,4 +28,6 @@ paths:
         '404':
           description: El producto con el id especificado no existe o la información provista es idéntica a la ya existente
         '401':
-          description: Ruta no autorizada si el usuario no tiene permisos
+          description: Unauthorized
+        '403':
+          description: Forbidden

@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
 		telefono: { type: String, required: true },
 		imagen: { type: String, required: true },
 		cartId: { type: String, required: true, unique: true },
-		admin: { type: Boolean, required: true },
+		role: { type: String, required: true },
 	}
 );
 

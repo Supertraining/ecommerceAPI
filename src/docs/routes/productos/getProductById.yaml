@@ -19,3 +19,4 @@ paths:
                 $ref: '#/components/schemas/Product'
         "404":
           description: El producto con el id especificado no existe
+        

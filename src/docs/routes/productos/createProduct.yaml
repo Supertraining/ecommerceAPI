@@ -1,6 +1,8 @@
 paths:
   /api/product/createProduct:
     post:
+      security:
+        - bearerAuth: [] 
       summary: Crea y almacena un nuevo producto autogenerando un identificador único y su fecha de creación. (Solo para usuarios administradores)
       tags:
         - Productos
@@ -17,7 +19,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-        "400": 
-          description: El producto no pudo ser almacenado
-        "401":
-          description: Ruta no autorizada si el usuario no tiene permisos
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden

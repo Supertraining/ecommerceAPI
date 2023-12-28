@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import { isAuthenticated } from '../middlewares/authValidation.js';
+import { authorize } from '../middlewares/roleValidation.js';
 
 const router = Router();
 
@@ -12,61 +14,23 @@ export default class CartsRouter {
 
     getRouter() {
 
-        router.get(
+        router.post('/', this.controllers.createCart);
 
-            '/',
+        router.use(isAuthenticated)
 
-            this.controllers
-                .getAll
+        router.get('/:id/productos', this.controllers.getCartProducts);
 
-        );
+        router.get('/:id', this.controllers.getCartById);
 
-        router.get(
+        router.post('/:idCarrito/productos/:idProducto/', this.controllers.addProduct);
 
-            '/:id/productos',
+        router.delete('/:idCarrito/productos/:id_prod', this.controllers.deleteCartProductById)
 
-            this.controllers
-                .getCartProducts
-        );
+        router.use(authorize('admin'))
 
-        router.get(
-            '/:id',
+        router.get('/', this.controllers.getAll);
 
-            this.controllers
-                .getCartById
-        );
-
-        router.post(
-
-            '/',
-
-            this.controllers
-                .createCart
-        );
-
-        router.post(
-
-            '/:idCarrito/productos/:idProducto/',
-
-            this.controllers
-                .addProduct
-        );
-
-        router.delete(
-
-            '/:id',
-
-            this.controllers
-                .deleteCartById
-        );
-
-        router.delete(
-
-            '/:idCarrito/productos/:id_prod',
-
-            this.controllers
-                .deleteCartProductById
-        );
+        router.delete('/:id', this.controllers.deleteCartById);
 
         return router;
 

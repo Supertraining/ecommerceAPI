@@ -1,4 +1,4 @@
-import logger, { handleLog } from "../../utils/logger.js";
+import logger, { handleLog } from "../../log/logger.js";
 const errorHandler = (err, req, res, next) => {
   try {
   

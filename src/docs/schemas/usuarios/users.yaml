@@ -13,7 +13,7 @@ components:
         -telefono
         -imagen
         -cartId
-        -admin
+        -role
       properties:
         id:
           type: String
@@ -55,5 +55,5 @@ components:
         telefono: "+541144234444"
         imagen: "http://localhost:8080/imagen/mateos@gmail.com"
         cartId: "643ff7ce5ad2c4b2ff642afe"
-        admin: false
+        role: "admin"
 

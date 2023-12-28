@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import logger from './logger.js'
 
 export const connect = (url) => {
 
@@ -14,7 +13,7 @@ export const connect = (url) => {
         
     } catch (error) {
 
-        logger.error(error);
+        throw error
 
     }
 

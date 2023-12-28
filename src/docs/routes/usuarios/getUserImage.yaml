@@ -1,11 +1,16 @@
 paths:
   /api/user/imagen:
     get:
-      summary: Retorna la ruta de acceso a la imagen del usuario, almacenada en la carpeta /public/imagenes del servidor. (loggeado requerido). 
+      security:
+        - bearerAuth: []
+      summary: Retorna la ruta de acceso a la imagen del usuario, almacenada en la carpeta /public/imagenes del servidor. (loggeado requerido).
       tags:
         - Usuarios
       responses:
-        "200":
+        '200':
           description: imagen encontrada.
-        "404":
-          description: Por favor inicie sesión. 
+        '404':
+          description: Por favor inicie sesión.
+        "401":
+          description: Unauthorized
+       

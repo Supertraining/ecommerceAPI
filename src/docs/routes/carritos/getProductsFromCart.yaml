@@ -1,6 +1,8 @@
 paths:
   /api/cart/{cartId}/productos:
     get:
+      security:
+        - bearerAuth: []
       summary: Retorna los productos de un carrito con el id especificado.
       tags:
         - Carritos
@@ -11,11 +13,13 @@ paths:
           schema:
             type: string
       responses:
-        "200":
-          description: Retorna 
+        '200':
+          description: Retorna
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-        "404": 
+        '404':
           description: Retorna un valor nulo y un mensaje de error
+        '401':
+          description: Unauthorized

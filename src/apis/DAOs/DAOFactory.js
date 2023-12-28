@@ -1,12 +1,12 @@
 import ProductsDAO from './ProductsDAO.js';
-import productModel from '../../schemas/product.js';
+import productModel from '../../db/schemas/product.js';
 import UsersDAO from './usersDAO.js';
-import userModel from '../../schemas/user.js';
+import userModel from '../../db/schemas/user.js';
 import CartsDAO from './cartsDAO.js';
-import cartSchema from '../../schemas/carts.js';
-import { connect } from '../../utils/mongoConnection.js';
+import cartSchema from '../../db/schemas/carts.js';
+import { connect } from '../../db/mongoConnection.js';
 import * as config from '../../config/config.js';
-import logger from '../../utils/logger.js';
+import logger from '../../log/logger.js';
 
 switch (config.nodeEnv) {
 

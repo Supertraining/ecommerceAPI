@@ -1,45 +1,28 @@
-import logger from "../../utils/logger.js";
-import { encryptPassword } from "../../utils/passwordUtils.js";
+import createError from "../../utils/createErrorUtils.js";
+import { authenticatePassword, encryptPassword } from "../../utils/passwordUtils.js";
+import { createToken } from "../../utils/tokenUtils.js";
 export default class UsersServices {
 
-    constructor(repo) {
+    constructor(repo, cartService) {
 
         this.repo = repo;
+        this.cartService = cartService
 
     }
 
-    async getByUserName(username) {
+    async registerUser(data) {
 
         try {
-
-            const user = await this.repo
-                .getByUserName(username);
-
-            return user;
-
-        } catch (error) {
-
-            throw error;
             
-        }
-
-    }
-
-    async insertUser(data) {
-
-        try {
-
-            if (!data.username || !data.password || !data.nombre || !data.direccion || !data.edad || 100 >= data.edad <= 0 || isNaN(data.edad) || !data.telefono || !data.imagen) {
-
-                return null
-
-            }
-
+            const {_id} = await this.cartService.createCart()
+            
             const newUser = await this.repo
-                .insertUser(
+                .registerUser(
 
                     {
                         ...data,
+                        role: data.role || 'user',
+                        cartId: _id,
                         password: await encryptPassword(data.password)
                     }
 
@@ -56,6 +39,43 @@ export default class UsersServices {
 
     }
 
+    async login(username, password) {
+
+
+        const user = await this.getByUserName(username);
+        
+        const PasswordMatch = await authenticatePassword(password, user);
+
+        if (!PasswordMatch) {
+            let error = createError(400, 'Wrong password');
+            throw error;
+        }
+
+        const { password: userPassword, ...safeUserInfo } = user; 
+     
+        const signedToken = await createToken(safeUserInfo);
+
+        return signedToken;
+
+    }
+
+    async getByUserName(username) {
+
+        try {
+
+            const user = await this.repo
+                .getByUserName(username);
+
+            return user;
+
+        } catch (error) {
+
+            throw error;
+
+        }
+
+    }
+
     async deleteById(id) {
 
         try {
@@ -63,7 +83,7 @@ export default class UsersServices {
             const data = await this.repo
                 .deleteById(id);
 
-            return data 
+            return data
 
         } catch (error) {
 
@@ -96,7 +116,7 @@ export default class UsersServices {
             const data = await this.repo
                 .getById(id);
 
-                return data
+            return data
 
         }
         catch (error) {
@@ -118,8 +138,8 @@ export default class UsersServices {
                     }
                 );
 
-            
-            
+
+
             const updatedUser = await this.repo
                 .getById(id);
 

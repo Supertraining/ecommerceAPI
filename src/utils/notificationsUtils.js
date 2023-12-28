@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import Twilio from 'twilio'
-import logger from './logger.js';
+import logger from '../log/logger.js';
 import * as config from '../config/config.js';
 
 const transporter = nodemailer.createTransport({
@@ -44,7 +44,7 @@ export const adminNewUserNotification = async (newUser) => {
 
     } catch (error) {
 
-        logger.error(error);
+        throw error
 
     }
 }
@@ -79,7 +79,7 @@ export const adminNewOrderNotification = async (user, newOrder) => {
 
     } catch (error) {
 
-        logger.error(error);
+        throw error
 
     }
 }
@@ -100,7 +100,7 @@ export const userOrderNotification = async (userPhone) => {
 
     } catch (error) {
 
-        logger.error(error);
+        throw error
 
     }
     

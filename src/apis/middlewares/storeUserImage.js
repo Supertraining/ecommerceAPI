@@ -1,5 +1,3 @@
-import { routeLogger } from '../../utils/logger.js';
-
 export const savePicturesLocal = async (req, res, next) => {
 
     try {
@@ -8,13 +6,12 @@ export const savePicturesLocal = async (req, res, next) => {
 
         image.mv('./public/images/' + `${req.body.username}` + '.jpg');
 
+        next();
+
     } catch (error) {
 
-        routeLogger(req, 'error', error);
         next(error);
 
     }
-
-    await next();
 
 };

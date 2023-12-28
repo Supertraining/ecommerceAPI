@@ -1,18 +1,23 @@
 paths:
   /api/user/eliminar/{id}:
     delete:
+      security:
+        - bearerAuth: []
       summary: Elimina el usuario con el id proporcionado
       tags:
         - Usuarios
       parameters:
-      - name: id
-        in: path
-        description: El parámetro de la ruta toma el id del usuario
-        required: true
-        type: string
+        - name: id
+          in: path
+          description: El parámetro de la ruta toma el id del usuario
+          required: true
+          type: string
       responses:
-        "204":
+        '204':
           description: usuario eliminado con éxito
-        "404":
+        '404':
           description: El usuario con el id especificado no existe
-       
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden

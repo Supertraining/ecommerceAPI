@@ -1,21 +1,26 @@
 paths:
   /api/user/user/{id}:
     get:
+      security:
+        - bearerAuth: []
       summary: Retorna el usuario con el id especificado
       tags:
         - Usuarios
       parameters:
-      - name: id
-        in: path
-        description: El parámetro de la ruta toma el id del usuario
-        required: true
-        type: string
+        - name: id
+          in: path
+          description: El parámetro de la ruta toma el id del usuario
+          required: true
+          type: string
       responses:
-        "200":
+        '200':
           description: Devuelve el usuario solicitado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        "404":
+        '404':
           description: El usuario con el id especificado no existe
+        "401":
+          description: Unauthorized
+        
