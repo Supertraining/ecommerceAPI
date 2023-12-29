@@ -16,18 +16,18 @@ const cleanFileName = (fileName) => {
 async function dinamycRouter() {
   try {
     const dirList = await fs.promises.readdir(PATH_ROUTER);
-   
+
     dirList.forEach(async (fileName) => {
       const cleanName = cleanFileName(fileName);
       if (cleanName !== 'index') {
         const module = await import(`./${cleanName}.js`);
         const routerClass = module.default;
         router.use(`/${cleanName}`, routerClass.getRouter());
-        console.log(`Se esta cargando la ruta... /${cleanName}`);
+        console.log(`Se esta cargando la ruta... api/${cleanName}`);
       }
     });
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 }
 

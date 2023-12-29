@@ -1,5 +1,3 @@
-import userDTO from "../DTOs/userDTO.js";
-
 export default class UsersRepo {
 
 	constructor(dao) {
