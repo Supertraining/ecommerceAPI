@@ -8,7 +8,7 @@ import { cartService } from './cart.js';
 const userDAO = new DAOFactory('user');
 const userRepo = new UsersRepo(userDAO);
 export const userService = new UsersServices(userRepo, cartService);
-const userControllers = new UsersController(userService, cartService);
+const userControllers = new UsersController(userService);
 const userRouter = new UserRouter(userControllers);
 
 export default userRouter;

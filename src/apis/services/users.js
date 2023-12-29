@@ -1,6 +1,7 @@
 import createError from "../../utils/createErrorUtils.js";
 import { authenticatePassword, encryptPassword } from "../../utils/passwordUtils.js";
 import { createToken } from "../../utils/tokenUtils.js";
+import { adminNewOrderNotification, userOrderNotification } from '../../utils/notificationsUtils.js';
 export default class UsersServices {
 
     constructor(repo, cartService) {
@@ -154,6 +155,60 @@ export default class UsersServices {
 
         }
 
+    }
+
+    async newOrderNotification(username) {
+        try {
+            const user = await this.repo
+				.getByUserName(username);
+
+			const carrito = await this.cartService
+				.getCartById(user.cartId);
+
+			const products = carrito.productos;
+
+			if (products.length === 0) {
+
+                let error = createError(400, 'Carrito vacío'); 
+                throw error;
+			}
+
+			let generateOrder = {};
+
+			products
+				.forEach(product => {
+					generateOrder[ product.nombre ]
+						? generateOrder[ product.nombre ]++
+						: generateOrder[ product.nombre ] = 1;
+				});
+
+			const newOrder = JSON.stringify(generateOrder);
+
+			let compra = Boolean;
+
+            await adminNewOrderNotification(user, newOrder);
+
+			newOrder
+				? compra = true
+				: compra = false;
+
+			await userOrderNotification(user.telefono)
+        
+			return (
+
+				{
+					carrito: carrito,
+					user: user.username,
+					compra: compra
+				}
+
+            );
+            
+        } catch (error) {
+
+            throw error
+
+        }
     }
 
 }

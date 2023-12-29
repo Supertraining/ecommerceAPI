@@ -1,13 +1,8 @@
-import { adminNewOrderNotification, userOrderNotification } from '../../utils/notificationsUtils.js';
-import logger from '../../log/logger.js';
-
 export default class UsersController {
 
-	constructor(userService, cartService) {
+	constructor(userService) {
 
 		this.userServices = userService;
-
-		this.cartServices = cartService;
 
 	}
 
@@ -117,51 +112,10 @@ export default class UsersController {
 	newOrderNotification = async (req, res, next) => {
 
 		try {
+			const username  = req.user.username
+			const order = await this.userServices.newOrderNotification(username)
 
-			const user = await this.userServices
-				.getByUserName(req.user.username);
-
-			const carrito = await this.cartServices
-				.getCartById(user.cartId);
-
-			const products = carrito.productos;
-
-			if (products.length === 0) {
-
-				res.status(404).json({ message: 'Carrito vacío' })
-				return
-			}
-
-			let generateOrder = {};
-
-			products
-				.forEach(product => {
-					generateOrder[ product.nombre ]
-						? generateOrder[ product.nombre ]++
-						: generateOrder[ product.nombre ] = 1;
-				});
-
-			const newOrder = JSON.stringify(generateOrder);
-
-			let compra = Boolean;
-
-			adminNewOrderNotification(user, newOrder);
-
-			newOrder
-				? compra = true
-				: compra = false;
-
-			userOrderNotification(user.telefono)
-
-			res.json(
-
-				{
-					carrito: carrito,
-					user: user.username,
-					compra: compra
-				}
-
-			);
+			res.json(order);
 
 		} catch (error) {
 
@@ -170,40 +124,6 @@ export default class UsersController {
 		}
 
 	}
-
-
-	logout = async (req, res, next) => {
-
-		try {
-
-			res.json({ message: `Hasta luego ${req.user.username}` });
-
-
-			setTimeout(() => {
-
-				req.logout((error) => {
-
-					if (error) {
-
-						logger.error('Error en cierre de sesión');
-
-					} else {
-
-						logger.info('session eliminada con éxito');
-
-					}
-
-				});
-			}, 2000);
-
-		} catch (error) {
-
-			next(error)
-
-		}
-
-	}
-
 
 	deleteById = async (req, res, next) => {
 

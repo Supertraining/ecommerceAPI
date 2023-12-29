@@ -40,7 +40,9 @@ export const adminNewUserNotification = async (newUser) => {
 
         logger.info(`Message sent: ${info.messageId}`);
 
-        logger.info(`Preview URL: ${ nodemailer.getTestMessageUrl(info)}`);
+        logger.info(`Preview URL: ${nodemailer.getTestMessageUrl(info)}`);
+        
+        return info;
 
     } catch (error) {
 
@@ -68,14 +70,16 @@ export const adminNewOrderNotification = async (user, newOrder) => {
         logger.info(`Preview URL: ${ nodemailer.getTestMessageUrl(info)}`);
 
         const client = Twilio(config.accountSID, config.authToken);
-        let message = await client.messages
+        const message = await client.messages
             .create(
                 {
                     body: `Nuevo pedido de ${user.nombre}, ${user.username}`,
-                    from: `whatsapp:${config.twilioNumber}`,
-                    to: `whatsapp:${config.adminNumber}`
+                    from: `${config.twilioNumber}`,
+                    to: `${config.adminNumber}`
                 }
-            )
+        )
+        
+        return message;
 
     } catch (error) {
 
@@ -93,10 +97,12 @@ export const userOrderNotification = async (userPhone) => {
         const message = await client.messages.create(
             {
                 body: 'Su pedido ha sido recibido y se encuentra en proceso',
-                from: config.twilioNumberSms,
+                from: config.twilioNumber,
                 to: `${userPhone}`,
             }
         );
+
+        return message;
 
     } catch (error) {
 
